@@ -1,0 +1,662 @@
+/* ============================================
+   NATIVE NATURE — Product Page Styles
+   ============================================ */
+
+/* ============================================
+   Product Hero / PDP
+   ============================================ */
+
+.pdp-hero {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: calc(var(--nav-height) + 60px) 24px 80px;
+}
+
+.pdp-gallery {
+    position: sticky;
+    top: calc(var(--nav-height) + 24px);
+    align-self: start;
+}
+
+.gallery-main {
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 1;
+    margin-bottom: 16px;
+}
+
+.gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-thumbs {
+    display: flex;
+    gap: 12px;
+}
+
+.thumb {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.thumb.active {
+    border-color: var(--green-primary);
+}
+
+.thumb:hover {
+    border-color: var(--green-light);
+}
+
+.pdp-info {
+    padding-top: 20px;
+}
+
+.pdp-breadcrumb {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+}
+
+.pdp-breadcrumb a {
+    color: var(--text-light);
+    transition: color 0.3s;
+}
+
+.pdp-breadcrumb a:hover {
+    color: var(--green-primary);
+}
+
+.pdp-stars {
+    color: #E8B931;
+    font-size: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pdp-stars span {
+    color: var(--text-light);
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.pdp-title {
+    font-family: var(--font-heading);
+    font-size: clamp(32px, 3.5vw, 44px);
+    font-weight: 500;
+    color: var(--green-dark);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.pdp-subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+.pdp-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.pdp-price {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--green-dark);
+}
+
+.pdp-subscription {
+    font-size: 13px;
+    color: var(--green-primary);
+    font-weight: 500;
+}
+
+.pdp-description {
+    margin-bottom: 28px;
+}
+
+.pdp-description p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-light);
+}
+
+/* Purchase Options */
+.purchase-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.purchase-option {
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: block;
+}
+
+.purchase-option:hover {
+    border-color: var(--green-light);
+}
+
+.purchase-option.active {
+    border-color: var(--green-primary);
+    background: var(--green-bg);
+}
+
+.purchase-option input {
+    display: none;
+}
+
+.option-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.option-left strong {
+    display: block;
+    font-size: 14px;
+    color: var(--green-dark);
+    margin-bottom: 2px;
+}
+
+.option-left span {
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+.option-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--green-primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 100px;
+}
+
+/* Quantity & ATC */
+.pdp-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.qty-btn {
+    width: 44px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--text);
+    transition: background 0.3s;
+}
+
+.qty-btn:hover {
+    background: var(--green-pastel);
+}
+
+.qty-value {
+    width: 32px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--green-dark);
+}
+
+.btn-atc {
+    flex: 1;
+    font-size: 14px;
+    padding: 14px 28px;
+}
+
+/* Trust badges */
+.pdp-trust {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.pdp-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+.pdp-trust-item svg {
+    color: var(--green-primary);
+    flex-shrink: 0;
+}
+
+/* ============================================
+   Ingredient Cards
+   ============================================ */
+
+.pdp-ingredients-section {
+    padding: var(--section-pad) 0;
+    background: var(--green-bg);
+}
+
+.ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.ingredient-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid var(--border);
+    transition: all 0.4s var(--ease);
+    text-align: center;
+}
+
+.ingredient-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(44, 62, 45, 0.08);
+}
+
+.ingredient-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 28px;
+}
+
+.ingredient-card h3 {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--green-dark);
+    margin-bottom: 10px;
+}
+
+.ingredient-card p {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.7;
+}
+
+/* ============================================
+   How to Use
+   ============================================ */
+
+.pdp-howto {
+    padding: var(--section-pad) 0;
+}
+
+.howto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.howto-content .section-tag {
+    text-align: left;
+}
+
+.howto-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.howto-step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.step-number {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--green-light);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+}
+
+.howto-step strong {
+    display: block;
+    font-size: 16px;
+    color: var(--green-dark);
+    margin-bottom: 4px;
+}
+
+.howto-step p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* ============================================
+   Results Section
+   ============================================ */
+
+.pdp-results {
+    padding: var(--section-pad) 0;
+    background: var(--green-dark);
+    color: var(--white);
+}
+
+.pdp-results .section-tag {
+    color: var(--green-light);
+}
+
+.pdp-results .section-title {
+    color: var(--white);
+}
+
+.pdp-results .section-title em {
+    color: var(--green-light);
+}
+
+.pdp-results .section-subtitle {
+    color: var(--green-light);
+    opacity: 0.8;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.result-card {
+    text-align: center;
+    padding: 32px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    transition: all 0.3s;
+}
+
+.result-card:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.result-number {
+    font-family: var(--font-heading);
+    font-size: clamp(40px, 4vw, 56px);
+    font-weight: 600;
+    color: var(--green-light);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.result-card p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+/* ============================================
+   Reviews Section
+   ============================================ */
+
+.pdp-reviews {
+    padding: var(--section-pad) 0;
+}
+
+.reviews-summary {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 48px;
+    align-items: center;
+    margin-bottom: 48px;
+    padding: 32px;
+    background: var(--green-bg);
+    border-radius: 16px;
+}
+
+.reviews-average {
+    text-align: center;
+    padding: 0 32px;
+}
+
+.avg-number {
+    font-family: var(--font-heading);
+    font-size: 56px;
+    font-weight: 600;
+    color: var(--green-dark);
+    display: block;
+    line-height: 1;
+}
+
+.avg-stars {
+    color: #E8B931;
+    font-size: 20px;
+    letter-spacing: 3px;
+    margin: 8px 0;
+}
+
+.avg-count {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.reviews-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+.bar-row span:first-child {
+    width: 32px;
+    text-align: right;
+}
+
+.bar-row span:last-child {
+    width: 36px;
+}
+
+.bar {
+    flex: 1;
+    height: 8px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: var(--green-primary);
+    border-radius: 100px;
+    transition: width 1s var(--ease-out);
+}
+
+.reviews-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.review-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s;
+}
+
+.review-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(44, 62, 45, 0.08);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.review-author-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.review-author-info strong {
+    display: block;
+    font-size: 14px;
+    color: var(--green-dark);
+}
+
+.verified-badge {
+    font-size: 11px;
+    color: var(--green-primary);
+    font-weight: 500;
+}
+
+.review-date {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.review-stars {
+    color: #E8B931;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.review-card h4 {
+    font-size: 15px;
+    color: var(--green-dark);
+    margin-bottom: 8px;
+}
+
+.review-card p {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.7;
+}
+
+/* ============================================
+   Related Products
+   ============================================ */
+
+.pdp-related {
+    padding: var(--section-pad) 0;
+    background: var(--green-bg);
+}
+
+.related-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .ingredients-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .results-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .reviews-list {
+        grid-template-columns: 1fr;
+    }
+
+    .related-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .pdp-hero {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding-top: calc(var(--nav-height) + 48px);
+    }
+
+    .pdp-gallery {
+        position: static;
+    }
+
+    .howto-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .reviews-summary {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .ingredients-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .results-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .related-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pdp-actions {
+        flex-direction: column;
+    }
+
+    .btn-atc {
+        width: 100%;
+    }
+}

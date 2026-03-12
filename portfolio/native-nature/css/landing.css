@@ -1,0 +1,299 @@
+/* ============================================
+   NATIVE NATURE — Landing Page Styles
+   Shared across all product landing pages
+   ============================================ */
+
+/* ============================================
+   Benefits Bar
+   ============================================ */
+
+.benefits-bar {
+    padding: 48px 0;
+    background: var(--green-bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.benefit-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+}
+
+.benefit-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--green-pastel);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--green-primary);
+}
+
+.benefit-item strong,
+.benefit-item .benefit-label {
+    font-size: 14px;
+    color: var(--green-dark);
+    letter-spacing: 0.02em;
+}
+
+/* ============================================
+   Before & After Section
+   ============================================ */
+
+.before-after-section,
+.landing-before-after {
+    padding: var(--section-pad) 0;
+}
+
+.ba-grid,
+.before-after-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.ba-card,
+.before-after-card {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--white);
+    transition: all 0.3s var(--ease);
+}
+
+.ba-card:hover,
+.before-after-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(44, 62, 45, 0.08);
+}
+
+.ba-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    aspect-ratio: 2/1;
+}
+
+.ba-before,
+.ba-after {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    position: relative;
+}
+
+.ba-before {
+    background: var(--cream);
+    color: var(--text-muted);
+}
+
+.ba-after {
+    background: var(--green-pastel);
+    color: var(--green-primary);
+}
+
+.ba-label {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+}
+
+.ba-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.ba-info strong {
+    display: block;
+    font-size: 14px;
+    color: var(--green-dark);
+    margin-bottom: 4px;
+}
+
+.ba-info span {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ============================================
+   FAQ Accordion
+   ============================================ */
+
+.faq-section,
+.landing-faq {
+    padding: var(--section-pad) 0;
+    background: var(--off-white);
+}
+
+.faq-list {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    border-bottom: 1px solid var(--border);
+}
+
+.faq-item:first-child {
+    border-top: 1px solid var(--border);
+}
+
+.faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--green-dark);
+    text-align: left;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+    transition: color 0.3s;
+}
+
+.faq-question:hover {
+    color: var(--green-primary);
+}
+
+.faq-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--green-pastel);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s;
+    font-size: 18px;
+    color: var(--green-primary);
+    line-height: 1;
+}
+
+.faq-item.open .faq-icon {
+    background: var(--green-primary);
+    color: var(--white);
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s var(--ease), padding 0.4s var(--ease);
+}
+
+.faq-answer-inner {
+    padding: 0 0 20px;
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.7;
+}
+
+.faq-item.open .faq-answer {
+    max-height: 200px;
+}
+
+/* ============================================
+   Sale Badge on PDP
+   ============================================ */
+
+.pdp-sale-badge {
+    display: inline-block;
+    background: var(--red-sale);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.pdp-new-badge {
+    display: inline-block;
+    background: var(--green-primary);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+/* ============================================
+   Product links on homepage
+   ============================================ */
+
+.product-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .ba-grid,
+    .before-after-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .benefits-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ba-grid,
+    .before-after-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-question {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+}
