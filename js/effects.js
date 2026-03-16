@@ -105,16 +105,17 @@ const Effects = (() => {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const blobCount = options.blobCount || 5;
     const speed = options.speed || 0.3;
+    let animId = null;
+    let isVisible = false;
 
     const colors = [
-      { r: 0, g: 229, b: 255 },     // cyan
-      { r: 123, g: 97, b: 255 },     // violet
-      { r: 0, g: 100, b: 200 },      // deep blue
-      { r: 0, g: 180, b: 220 },      // teal
-      { r: 80, g: 60, b: 200 },      // indigo
+      { r: 0, g: 229, b: 255 },
+      { r: 123, g: 97, b: 255 },
+      { r: 0, g: 100, b: 200 },
+      { r: 0, g: 180, b: 220 },
+      { r: 80, g: 60, b: 200 },
     ];
 
     const blobs = [];
@@ -131,11 +132,12 @@ const Effects = (() => {
 
     function resize() {
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
+      canvas.width = rect.width;
+      canvas.height = rect.height;
     }
 
     function draw() {
+      if (!isVisible) { animId = null; return; }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       blobs.forEach(blob => {
@@ -157,12 +159,17 @@ const Effects = (() => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       });
 
-      requestAnimationFrame(draw);
+      animId = requestAnimationFrame(draw);
     }
 
     resize();
     window.addEventListener('resize', resize);
-    draw();
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible && !animId) draw();
+    }, { threshold: 0 });
+    observer.observe(canvas);
   }
 
   /* --- WebGL Shader Background --- */
@@ -173,23 +180,21 @@ const Effects = (() => {
     const gl = canvas.getContext('webgl');
     if (!gl) return;
 
+    let animId = null;
+    let isVisible = true;
+
     const vsSource = `
       attribute vec4 aVertexPosition;
       void main() { gl_Position = aVertexPosition; }
     `;
 
     const fsSource = `
-      precision highp float;
+      precision mediump float;
       uniform vec2 iResolution;
       uniform float iTime;
 
       const float overallSpeed = 0.2;
       const float gridSmoothWidth = 0.015;
-      const float axisWidth = 0.05;
-      const float majorLineWidth = 0.025;
-      const float minorLineWidth = 0.0125;
-      const float majorLineFrequency = 5.0;
-      const float minorLineFrequency = 1.0;
       const float scale = 5.0;
       const vec4 lineColor = vec4(0.0, 0.6, 0.9, 1.0);
       const float minLineWidth = 0.01;
@@ -204,12 +209,11 @@ const Effects = (() => {
       const float offsetSpeed = 1.33 * overallSpeed;
       const float minOffsetSpread = 0.6;
       const float maxOffsetSpread = 2.0;
-      const int linesPerGroup = 16;
+      const int linesPerGroup = 10;
 
       #define drawCircle(pos, radius, coord) smoothstep(radius + gridSmoothWidth, radius, length(coord - (pos)))
       #define drawSmoothLine(pos, halfWidth, t) smoothstep(halfWidth, 0.0, abs(pos - (t)))
       #define drawCrispLine(pos, halfWidth, t) smoothstep(halfWidth + gridSmoothWidth, halfWidth, abs(pos - (t)))
-      #define drawPeriodicLine(freq, width, t) drawCrispLine(freq / 2.0, width, abs(mod(t, freq) - (freq) / 2.0))
 
       float random(float t) {
         return (cos(t) + cos(t * 1.3 + 1.3) + cos(t * 1.4 + 1.4)) / 3.0;
@@ -295,9 +299,8 @@ const Effects = (() => {
 
     function resize() {
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
+      canvas.width = rect.width;
+      canvas.height = rect.height;
       gl.viewport(0, 0, canvas.width, canvas.height);
     }
 
@@ -307,6 +310,7 @@ const Effects = (() => {
     const startTime = performance.now();
 
     function render() {
+      if (!isVisible) { animId = null; return; }
       const t = (performance.now() - startTime) / 1000;
       gl.clearColor(0, 0, 0, 1);
       gl.clear(gl.COLOR_BUFFER_BIT);
@@ -317,10 +321,16 @@ const Effects = (() => {
       gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
       gl.enableVertexAttribArray(posLoc);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      requestAnimationFrame(render);
+      animId = requestAnimationFrame(render);
     }
 
-    requestAnimationFrame(render);
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible && !animId) render();
+    }, { threshold: 0 });
+    observer.observe(canvas);
+
+    render();
   }
 
   /* --- Text Split (wrap each word in a span for animation) --- */

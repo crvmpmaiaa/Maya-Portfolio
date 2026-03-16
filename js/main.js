@@ -41,12 +41,6 @@
       touchMultiplier: 2,
     });
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
@@ -161,6 +155,7 @@
   /* --- Counter Animations --- */
   function initCounters(selector) {
     document.querySelectorAll(selector).forEach(el => {
+      if (el.hasAttribute('data-no-count')) return;
       const target = parseFloat(el.dataset.count);
       const decimals = parseInt(el.dataset.decimals) || 0;
       const obj = { val: 0 };
@@ -222,7 +217,7 @@
       trigger: '.pricing',
       start: 'top 70%',
       once: true,
-      onEnter: () => initCounters('.pricing-amount')
+      onEnter: () => { initCounters('.pricing-amount'); initCounters('.pricing-amount-gbp'); }
     });
   }
 
@@ -237,7 +232,7 @@
 
     const totalWidth = inner.scrollWidth / 2;
 
-    gsap.to(inner, {
+    const carouselTween = gsap.to(inner, {
       x: -totalWidth,
       duration: 40,
       ease: 'none',
@@ -247,11 +242,11 @@
       }
     });
 
-    // Pause on hover
+    // Pause on hover (only this tween, not the global timeline)
     const track = document.getElementById('testimonialsTrack');
     if (track) {
-      track.addEventListener('mouseenter', () => gsap.globalTimeline.timeScale(0.1));
-      track.addEventListener('mouseleave', () => gsap.globalTimeline.timeScale(1));
+      track.addEventListener('mouseenter', () => carouselTween.timeScale(0.1));
+      track.addEventListener('mouseleave', () => carouselTween.timeScale(1));
     }
   }
 
