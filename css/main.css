@@ -554,20 +554,22 @@ body.cursor-ready .cursor-circle { opacity: 1; }
 /* --- Pricing --- */
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
-  align-items: start;
-  max-width: 1100px;
+  align-items: stretch;
+  max-width: 1400px;
   margin: 0 auto;
 }
 .pricing-card {
   background: var(--bg-secondary);
   border: var(--border-subtle);
   border-radius: 24px;
-  padding: 2.5rem 2rem;
+  padding: 2rem 1.5rem;
   text-align: center;
   position: relative;
   transition: transform 0.4s var(--ease-out-expo), border-color 0.4s ease;
+  display: flex;
+  flex-direction: column;
 }
 .pricing-card:hover {
   transform: translateY(-4px);
@@ -583,7 +585,7 @@ body.cursor-ready .cursor-circle { opacity: 1; }
 .pricing-card--popular:hover { transform: scale(1.05) translateY(-4px); }
 .pricing-badge {
   position: absolute;
-  top: -12px; left: 50%;
+  top: -14px; left: 50%;
   transform: translateX(-50%);
   background: var(--gradient-accent);
   color: var(--bg-primary);
@@ -593,6 +595,9 @@ body.cursor-ready .cursor-circle { opacity: 1; }
   border-radius: 100px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+.pricing-card--popular .pricing-tier {
+  margin-top: 1.25rem;
 }
 .pricing-tier {
   font-family: var(--font-display);
@@ -664,6 +669,7 @@ body.cursor-ready .cursor-circle { opacity: 1; }
 .pricing-features {
   text-align: left;
   margin-bottom: 2rem;
+  flex: 1;
 }
 .pricing-features li {
   font-size: 0.875rem;
@@ -687,7 +693,7 @@ body.cursor-ready .cursor-circle { opacity: 1; }
   background-repeat: no-repeat;
   background-position: center;
 }
-.pricing-btn { width: 100%; }
+.pricing-btn { width: 100%; margin-top: auto; }
 
 /* --- Portfolio Preview --- */
 .portfolio-grid {
