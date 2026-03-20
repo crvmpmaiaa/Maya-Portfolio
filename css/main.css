@@ -796,6 +796,7 @@ body.cursor-ready .cursor-circle { opacity: 1; }
 }
 .pricing-ad-spend-note {
   margin-top: 0.75rem;
+  margin-bottom: 1rem;
   padding: 0.5rem 0.75rem;
   background: rgba(245, 158, 11, 0.08);
   border-radius: 8px;
