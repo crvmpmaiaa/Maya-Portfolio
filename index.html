@@ -200,67 +200,131 @@
           <h2 class="section-title">Simple, Transparent Pricing</h2>
           <p class="section-subtitle">No hidden fees. No surprises. Just great websites, fast.</p>
         </div>
-        <div class="pricing-grid">
-          <div class="pricing-card" data-animate="fade-up" data-delay="0">
-            <div class="pricing-tier">Starter</div>
-            <div class="pricing-price"><span class="pricing-currency">$</span><span class="pricing-amount" data-count="200">0</span></div>
-            <div class="pricing-price-gbp"><span class="pricing-currency-gbp">£</span><span class="pricing-amount-gbp" data-count="150">0</span></div>
-            <div class="pricing-delivery">per month — 12-month contract</div>
-            <ul class="pricing-features">
-              <li>One-page landing page</li>
-              <li>Responsive design</li>
-              <li>SEO fundamentals</li>
-              <li>Contact form</li>
-              <li>1 free round of amends</li>
-              <li>Legal pages included</li>
-              <li>Monthly maintenance</li>
-              <li>Google Business Profile setup</li>
-            </ul>
-            <a href="https://calendar.app.google/mcwL3QfnGBo8TwRH8" target="_blank" rel="noopener" class="btn btn-outline pricing-btn" data-magnetic>Get Started</a>
-          </div>
-          <div class="pricing-card" data-animate="fade-up" data-delay="0.08">
-            <div class="pricing-tier">Basic</div>
-            <div class="pricing-price"><span class="pricing-currency">$</span><span class="pricing-amount" data-count="1000">0</span></div>
-            <div class="pricing-price-gbp"><span class="pricing-currency-gbp">£</span><span class="pricing-amount-gbp" data-count="750">0</span></div>
-            <div class="pricing-delivery">Delivered in 3 days</div>
-            <div class="pricing-hosting">+ £50 / $70 per month — domain, hosting &amp; maintenance</div>
-            <ul class="pricing-features">
-              <li>Everything in Starter</li>
-              <li>No contract</li>
-              <li>Up to 3 pages</li>
-            </ul>
-            <a href="https://calendar.app.google/mcwL3QfnGBo8TwRH8" target="_blank" rel="noopener" class="btn btn-outline pricing-btn" data-magnetic>Get Started</a>
-          </div>
-          <div class="pricing-card pricing-card--popular" data-animate="fade-up" data-delay="0.16">
-            <div class="pricing-badge">Most Popular</div>
-            <div class="pricing-tier">Pro</div>
-            <div class="pricing-price"><span class="pricing-currency">$</span><span class="pricing-amount" data-count="1950">0</span></div>
-            <div class="pricing-price-gbp"><span class="pricing-currency-gbp">£</span><span class="pricing-amount-gbp" data-count="1450">0</span></div>
-            <div class="pricing-delivery">Delivered in 3 days</div>
-            <div class="pricing-hosting">+ £50 / $70 per month — domain, hosting &amp; maintenance</div>
-            <ul class="pricing-features">
-              <li>Everything in Basic</li>
-              <li>Premium animations</li>
-              <li>CMS integration</li>
-              <li>Advanced SEO</li>
-              <li>2 free rounds of amends</li>
-            </ul>
-            <a href="https://calendar.app.google/mcwL3QfnGBo8TwRH8" target="_blank" rel="noopener" class="btn btn-primary pricing-btn" data-magnetic>Get Started</a>
-          </div>
-          <div class="pricing-card" data-animate="fade-up" data-delay="0.24">
-            <div class="pricing-tier">Enterprise</div>
+        <div class="pricing-tabs" data-animate="fade-up">
+          <button class="pricing-tab active" data-tab="subscription">Subscription</button>
+          <button class="pricing-tab" data-tab="one-off">One-Off Payment</button>
+        </div>
 
-            <div class="pricing-price"><span class="pricing-amount" data-no-count>Custom</span></div>
-            <div class="pricing-delivery">Tailored to your needs</div>
-            <ul class="pricing-features">
-              <li>Unlimited pages</li>
-              <li>Custom features & integrations</li>
-              <li>E-commerce ready</li>
-              <li>Priority support</li>
-              <li>Unlimited amends</li>
-              <li>Legal pages included</li>
-            </ul>
-            <a href="https://calendar.app.google/mcwL3QfnGBo8TwRH8" target="_blank" rel="noopener" class="btn btn-outline pricing-btn" data-magnetic>Book a Call</a>
+        <div class="pricing-panel active" id="pricing-subscription">
+          <p class="pricing-panel-subtitle">Your site included. Spread the cost and grow when you're ready.</p>
+          <div class="pricing-grid pricing-grid--three">
+            <div class="pricing-card" data-animate="fade-up" data-delay="0">
+              <div class="pricing-badge-days"><span class="pricing-badge-dot"></span> Site delivered in 3 days</div>
+              <div class="pricing-tier">Starter</div>
+              <div class="pricing-price"><span class="pricing-currency">£</span><span class="pricing-amount" data-count="150">0</span></div>
+              <div class="pricing-delivery">per month</div>
+              <div class="pricing-contract">12-month contract — site included</div>
+              <hr class="pricing-divider">
+              <ul class="pricing-features">
+                <li>One-page landing page</li>
+                <li>Responsive design</li>
+                <li>SEO fundamentals</li>
+                <li>Contact form</li>
+                <li>1 free round of amends</li>
+                <li>Legal pages included</li>
+                <li>Hosting &amp; maintenance</li>
+                <li>Google Business Profile setup</li>
+              </ul>
+              <a href="https://calendar.app.google/mcwL3QfnGBo8TwRH8" target="_blank" rel="noopener" class="btn btn-outline pricing-btn" data-magnetic>Get Started &rarr;</a>
+            </div>
+            <div class="pricing-card pricing-card--popular" data-animate="fade-up" data-delay="0.08">
+              <div class="pricing-badge">Most Popular</div>
+              <div class="pricing-badge-days"><span class="pricing-badge-dot"></span> Site delivered in 7 days</div>
+              <div class="pricing-tier">Pro</div>
+              <div class="pricing-price"><span class="pricing-currency">£</span><span class="pricing-amount" data-count="275">0</span></div>
+              <div class="pricing-delivery">per month</div>
+              <div class="pricing-contract">12-month contract — site included</div>
+              <hr class="pricing-divider">
+              <ul class="pricing-features">
+                <li>Everything in Starter</li>
+                <li>Unlimited pages</li>
+                <li>Advanced SEO</li>
+              </ul>
+              <div class="pricing-section-label">Automations included</div>
+              <ul class="pricing-features">
+                <li>Lead follow-up chatbot</li>
+                <li>Google review bot</li>
+                <li>Database reactivation</li>
+                <li>Missed call text back</li>
+              </ul>
+              <a href="https://calendar.app.google/mcwL3QfnGBo8TwRH8" target="_blank" rel="noopener" class="btn btn-primary pricing-btn" data-magnetic>Get Started &rarr;</a>
+            </div>
+            <div class="pricing-card" data-animate="fade-up" data-delay="0.16">
+              <div class="pricing-tier" style="margin-top: 2.5rem;">Growth</div>
+              <div class="pricing-price"><span class="pricing-currency">£</span><span class="pricing-amount" data-count="1500">0</span></div>
+              <div class="pricing-delivery">per month</div>
+              <div class="pricing-contract">12-month contract — site included</div>
+              <hr class="pricing-divider">
+              <ul class="pricing-features">
+                <li>Everything in Pro</li>
+              </ul>
+              <div class="pricing-section-label">Paid marketing included</div>
+              <ul class="pricing-features pricing-features--amber">
+                <li>Google Business SEO</li>
+                <li>Facebook ads management</li>
+                <li>Google ads management</li>
+              </ul>
+              <div class="pricing-ad-spend-note">Ad spend not included — billed separately by the platform</div>
+              <a href="https://calendar.app.google/mcwL3QfnGBo8TwRH8" target="_blank" rel="noopener" class="btn btn-outline pricing-btn pricing-btn--growth" data-magnetic>Let's Talk &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pricing-panel" id="pricing-one-off">
+          <p class="pricing-panel-subtitle">Your site delivered in 3 days — no ongoing cost unless you want it.</p>
+          <div class="pricing-grid pricing-grid--three">
+            <div class="pricing-card" data-animate="fade-up" data-delay="0">
+              <div class="pricing-badge-days"><span class="pricing-badge-dot"></span> Delivered in 3 days</div>
+              <div class="pricing-tier">Basic</div>
+              <div class="pricing-price"><span class="pricing-currency">£</span><span class="pricing-amount" data-count="750">0</span></div>
+              <div class="pricing-delivery">One-time payment</div>
+              <hr class="pricing-divider">
+              <ul class="pricing-features">
+                <li>Up to 3 pages</li>
+                <li>Responsive design</li>
+                <li>SEO fundamentals</li>
+                <li>Contact form</li>
+                <li>1 free round of amends</li>
+                <li>Legal pages included</li>
+                <li>Google Business Profile setup</li>
+              </ul>
+              <div class="pricing-maintenance"><strong>Optional:</strong> hosting &amp; maintenance +£50/mo</div>
+              <a href="https://calendar.app.google/mcwL3QfnGBo8TwRH8" target="_blank" rel="noopener" class="btn btn-outline pricing-btn" data-magnetic>Get Started &rarr;</a>
+            </div>
+            <div class="pricing-card pricing-card--popular" data-animate="fade-up" data-delay="0.08">
+              <div class="pricing-badge">Most Popular</div>
+              <div class="pricing-badge-days"><span class="pricing-badge-dot"></span> Delivered in 7 days</div>
+              <div class="pricing-tier">Pro</div>
+              <div class="pricing-price"><span class="pricing-currency">£</span><span class="pricing-amount" data-count="1450">0</span></div>
+              <div class="pricing-delivery">One-time payment</div>
+              <hr class="pricing-divider">
+              <ul class="pricing-features">
+                <li>Everything in Basic</li>
+                <li>Up to 20 pages</li>
+                <li>Premium animations</li>
+                <li>CMS integration</li>
+                <li>Advanced SEO</li>
+                <li>2 free rounds of amends</li>
+              </ul>
+              <div class="pricing-maintenance"><strong>Optional:</strong> hosting &amp; maintenance +£50/mo</div>
+              <a href="https://calendar.app.google/mcwL3QfnGBo8TwRH8" target="_blank" rel="noopener" class="btn btn-primary pricing-btn" data-magnetic>Get Started &rarr;</a>
+            </div>
+            <div class="pricing-card" data-animate="fade-up" data-delay="0.16">
+              <div class="pricing-tier" style="margin-top: 2.5rem;">Enterprise</div>
+              <div class="pricing-price"><span class="pricing-amount" data-no-count>Custom</span></div>
+              <div class="pricing-delivery">Tailored to your needs</div>
+              <hr class="pricing-divider">
+              <ul class="pricing-features">
+                <li>Unlimited pages</li>
+                <li>Custom features &amp; integrations</li>
+                <li>E-commerce ready</li>
+                <li>Priority support</li>
+                <li>Unlimited amends</li>
+                <li>Legal pages included</li>
+              </ul>
+              <div class="pricing-maintenance"><strong>Optional:</strong> hosting &amp; maintenance +£50/mo</div>
+              <a href="https://calendar.app.google/mcwL3QfnGBo8TwRH8" target="_blank" rel="noopener" class="btn btn-outline pricing-btn" data-magnetic>Let's Talk &rarr;</a>
+            </div>
           </div>
         </div>
       </div>

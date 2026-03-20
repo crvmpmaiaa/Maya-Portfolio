@@ -219,6 +219,22 @@
       once: true,
       onEnter: () => { initCounters('.pricing-amount'); initCounters('.pricing-amount-gbp'); }
     });
+
+    // Pricing tabs
+    document.querySelectorAll('.pricing-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.pricing-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.pricing-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        const panelId = 'pricing-' + tab.dataset.tab;
+        const panel = document.getElementById(panelId);
+        if (panel) {
+          panel.classList.add('active');
+          initCounters('.pricing-amount');
+          initCounters('.pricing-amount-gbp');
+        }
+      });
+    });
   }
 
   /* --- Testimonials Carousel --- */

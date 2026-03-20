@@ -552,6 +552,55 @@ body.cursor-ready .cursor-circle { opacity: 1; }
 }
 
 /* --- Pricing --- */
+.pricing-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  background: var(--bg-secondary);
+  border: var(--border-subtle);
+  border-radius: 100px;
+  padding: 0.375rem;
+  display: inline-flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+}
+.pricing .section-header + .pricing-tabs {
+  display: flex;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+.pricing-tab {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 100px;
+  color: var(--text-secondary);
+  transition: all 0.3s var(--ease-out-expo);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.pricing-tab:hover {
+  color: var(--text-primary);
+}
+.pricing-tab.active {
+  background: var(--gradient-accent);
+  color: var(--bg-primary);
+}
+.pricing-panel {
+  display: none;
+}
+.pricing-panel.active {
+  display: block;
+  animation: pricingFadeIn 0.4s var(--ease-out-expo);
+}
+@keyframes pricingFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -559,6 +608,10 @@ body.cursor-ready .cursor-circle { opacity: 1; }
   align-items: stretch;
   max-width: 1400px;
   margin: 0 auto;
+}
+.pricing-grid--three {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 1100px;
 }
 .pricing-card {
   background: var(--bg-secondary);
@@ -692,6 +745,84 @@ body.cursor-ready .cursor-circle { opacity: 1; }
   background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='%2300e5ff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
+}
+.pricing-panel-subtitle {
+  text-align: center;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  margin-bottom: 3.5rem;
+}
+.pricing-badge-days {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+.pricing-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.pricing-contract {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+.pricing-divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin: 0 0 1.25rem;
+}
+.pricing-section-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin: 0.75rem 0 0.5rem;
+}
+.pricing-features--amber li::before {
+  background: rgba(245, 158, 11, 0.15);
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='%23f59e0b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.pricing-ad-spend-note {
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(245, 158, 11, 0.08);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: #f59e0b;
+  text-align: left;
+}
+.pricing-btn--growth {
+  border-color: rgba(245, 158, 11, 0.3) !important;
+  color: #f59e0b !important;
+}
+.pricing-btn--growth:hover {
+  background: rgba(245, 158, 11, 0.08) !important;
+  border-color: #f59e0b !important;
+}
+.pricing-maintenance {
+  margin-top: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-align: left;
+}
+.pricing-maintenance strong {
+  color: var(--text-primary);
+  font-weight: 600;
 }
 .pricing-btn { width: 100%; margin-top: auto; }
 
