@@ -131,7 +131,7 @@ All assets generated via the pipeline in `SKILLassets.md`: Nano Banana Pro for s
   - Last frame: Foot Repair jar composed on warm cream/linen surface, soft natural light
   - Palette: aloe-green + cream + warm neutrals
 
-### Stills (10 assets — Nano Banana Pro)
+### Stills (11 assets — Nano Banana Pro)
 
 1. **Pillar tile — Foot & Hand** — editorial lifestyle: hands cradling a Foot Repair jar, linen surface, cream bg, aloe-green accents
 2. **Pillar tile — Body** — editorial lifestyle: 32oz pump lotion bottle on bathroom slab, morning light
@@ -139,10 +139,13 @@ All assets generated via the pipeline in `SKILLassets.md`: Nano Banana Pro for s
 4. **Pillar tile — Supplements** — editorial lifestyle: Ultra Aloe Juice quart bottle with glass on wooden counter
 5. **UltraAloe® story — Grow** — documentary: aloe field at dawn, rows of mature plants, warm golden light
 6. **UltraAloe® story — Harvest** — documentary: hands cutting an aloe leaf, close-up with natural sun
-7. **UltraAloe® story — Bottle** — documentary: finished cream being pumped/dispensed onto linen, lab-clean but warm
-8. **Before heel — Day 1** — tasteful close-up of a dry/cracked heel, neutral palette, not clinical, not graphic (think editorial beauty shoot, honest)
-9. **After heel — Day 14** — same composition, visibly healed / smooth, calm and believable
-10. **Full-width brand hero** — single editorial photograph: aloe plant + linen + morning light with negative space for a serif pull-quote overlay
+7. **UltraAloe® story — Process** — documentary: the proprietary process step — inner-fillet gel being separated/clarified in a warm-lit workspace, scientific but human-scale (beakers, linen cloth, glass — not a sterile factory)
+8. **UltraAloe® story — Bottle** — documentary: finished cream being pumped/dispensed onto linen, lab-clean but warm
+9. **Before heel — Day 1** — tasteful close-up of a dry/cracked heel, neutral palette, not clinical, not graphic (think editorial beauty shoot, honest)
+10. **After heel — Day 14** — same composition, visibly healed / smooth, calm and believable
+11. **Full-width brand hero** — single editorial photograph: aloe plant + linen + morning light with negative space for a serif pull-quote overlay
+
+**Shared palette/mood directive for stills 5–8:** generate all four UltraAloe® documentary stills in a single Nano Banana session with a shared lighting/palette reference so the four-beat cinematic moment feels continuous — mismatched tone here breaks the whole section.
 
 ### Reused from miracleofaloe.com (no generation)
 
@@ -185,9 +188,9 @@ native-nature/
 │   ├── landing.js                     # Rebuilt — homepage GSAP Moment 1 + Moment 2 choreography
 │   └── product.js                     # Rebuilt — PDP sticky ATC, before/after slider, FAQ accordion, review tag filter
 ├── assets/
-│   ├── hero.mp4                       # (user-generated via Seedance)
-│   ├── frames/                        # (FFmpeg-extracted frames from hero.mp4 for canvas scrub)
-│   ├── stills/                        # (10 Nano Banana stills)
+│   ├── hero.mp4                       # (user-generated via Seedance; handed to implementer)
+│   ├── frames/                        # (FFmpeg-extracted frames from hero.mp4 — extraction is a plan task, not a runtime step)
+│   ├── stills/                        # (11 Nano Banana stills)
 │   ├── products/                      # (scraped miracleofaloe product photos)
 │   └── brand/                         # (logo, favicon)
 └── products/
