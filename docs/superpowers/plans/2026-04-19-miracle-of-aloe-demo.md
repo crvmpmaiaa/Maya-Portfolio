@@ -1926,7 +1926,8 @@ Complete file:
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
 
-  // Config: frame count matches FFmpeg extraction (Task 0.3 default = 96 frames @ 24fps × 4s)
+  // Config: frame count matches FFmpeg extraction (Task 0.3 default = 96 frames @ 24fps × 4s).
+  // NOTE: update this constant when swapping in the real hero.mp4 — match `ls assets/frames/ | wc -l`.
   const FRAME_COUNT = 96;
   const FRAME_PATH = (i) => `assets/frames/frame_${String(i).padStart(4, '0')}.jpg`;
 
@@ -3302,13 +3303,22 @@ Prevents CLS. Walk through each `<img>` tag and confirm `width="X" height="Y"` a
 
 Add to `<head>` of both pages (after the font links):
 
+Homepage (`index.html`):
+
 ```html
 <link rel="preload" as="image" href="assets/brand/logo.webp">
 <link rel="preload" as="image" href="assets/products/foot-repair-front.png">
 <link rel="preload" as="image" href="assets/frames/frame_0001.jpg">
 ```
 
-(PDP version uses `../assets/...` prefixes.)
+PDP (`products/miracle-foot-repair-cream.html`):
+
+```html
+<link rel="preload" as="image" href="../assets/brand/logo.webp">
+<link rel="preload" as="image" href="../assets/products/foot-repair-front.png">
+```
+
+(PDP does not preload hero frames — they're homepage-only.)
 
 - [ ] **Step 5: Run Lighthouse on both pages (desktop preset)**
 
