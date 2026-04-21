@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>maiaa.ai — Web Development Proposal for Miracle of Aloe</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0A0E1A;
+    --bg-2:      #0E1320;
+    --surface:   #131826;
+    --surface-2: #1A2030;
+    --line:      #1F2638;
+    --line-2:    #2A3247;
+
+    --text:      #F5F7FA;
+    --text-soft: #C5CCD8;
+    --muted:     #6B7588;
+    --muted-2:   #4A5366;
+
+    --cyan:      #4FD8E5;
+    --blue:      #6B8DFF;
+    --indigo:    #8B7CFF;
+    --grad:      linear-gradient(135deg, #4FD8E5 0%, #6B8DFF 50%, #8B7CFF 100%);
+    --grad-soft: linear-gradient(135deg, rgba(79,216,229,0.12) 0%, rgba(139,124,255,0.12) 100%);
+    --grad-gold: linear-gradient(135deg, #E8C97A 0%, #D4A85A 100%);
+
+    --gold:      #E8C97A;
+
+    --radius:    14px;
+    --radius-lg: 22px;
+  }
+
+  html { scroll-behavior: smooth; scroll-snap-type: y proximity; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 800px 600px at 80% 10%, rgba(107,141,255,0.08), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 10% 90%, rgba(79,216,229,0.06), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .section {
+    min-height: 100vh;
+    padding: 80px 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    scroll-snap-align: start;
+    border-bottom: 1px solid var(--line);
+    z-index: 1;
+  }
+
+  .brand-mark {
+    position: fixed;
+    top: 28px; left: 88px;
+    z-index: 100;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .brand-mark::before {
+    content: '';
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--grad);
+    box-shadow: 0 0 24px rgba(107,141,255,0.4);
+  }
+
+  .nav-dots {
+    position: fixed;
+    right: 36px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    z-index: 100;
+  }
+  .nav-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--line-2);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nav-dot.active {
+    background: var(--cyan);
+    transform: scale(1.6);
+    box-shadow: 0 0 16px rgba(79,216,229,0.6);
+  }
+  .nav-dot:hover { background: var(--muted); }
+
+  /* Typography */
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .display {
+    font-size: clamp(48px, 6.4vw, 88px);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+  .display .grad,
+  .h2 .grad,
+  .signoff-text .grad,
+  .tier-name .grad {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .h2 {
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--text);
+  }
+
+  .lead {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-soft);
+    font-weight: 400;
+    max-width: 680px;
+    margin-top: 28px;
+  }
+  .lead strong { color: var(--text); font-weight: 600; }
+
+  /* COVER */
+  .cover-tags { display: flex; gap: 8px; margin-top: 36px; flex-wrap: wrap; }
+  .tag {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 8px 14px;
+    border-radius: 99px;
+    border: 1px solid var(--line-2);
+    color: var(--muted);
+    background: var(--surface);
+    font-weight: 500;
+  }
+  .tag.cyan {
+    color: var(--cyan);
+    border-color: rgba(79,216,229,0.3);
+    background: rgba(79,216,229,0.05);
+  }
+
+  .cover-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 80px; align-items: end; margin-top: 48px;
+  }
+  .cover-meta {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .cover-meta-cell {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px;
+  }
+  .cover-meta-cell:last-child { border-bottom: none; }
+  .meta-label {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    font-weight: 500;
+  }
+  .meta-value { font-size: 14px; color: var(--text); font-weight: 500; }
+
+  .scroll-hint {
+    position: absolute; bottom: 40px; left: 88px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    font-weight: 500;
+  }
+  .scroll-hint::after {
+    content: ''; width: 32px; height: 1px;
+    background: var(--cyan);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: scaleX(0.5); transform-origin: left; }
+    50% { opacity: 1; transform: scaleX(1); }
+  }
+
+  /* CONTEXT */
+  .context-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 32px; margin-top: 56px;
+  }
+  .context-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .context-card h3 {
+    font-size: 24px; font-weight: 600; line-height: 1.25;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .context-card p {
+    font-size: 14px; color: var(--muted); line-height: 1.75;
+  }
+  .context-card p strong { color: var(--text-soft); font-weight: 500; }
+
+  .context-list { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+  .context-item {
+    display: grid; grid-template-columns: 16px 1fr;
+    gap: 14px; align-items: start;
+    font-size: 13.5px; color: var(--muted); line-height: 1.65;
+  }
+  .context-item::before {
+    content: ''; width: 5px; height: 5px;
+    background: var(--cyan); border-radius: 50%;
+    margin-top: 8px;
+    box-shadow: 0 0 8px rgba(79,216,229,0.4);
+  }
+  .context-item strong { color: var(--text); font-weight: 500; }
+
+  /* APPROACH */
+  .approach-pillars {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-top: 56px;
+  }
+  .pillar {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 36px 30px;
+    display: flex; flex-direction: column; gap: 16px;
+    transition: all 0.3s;
+  }
+  .pillar:hover {
+    border-color: rgba(79,216,229,0.25);
+    transform: translateY(-3px);
+  }
+  .pillar-num {
+    font-size: 11px;
+    color: var(--cyan);
+    letter-spacing: 0.14em;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .pillar-title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  .pillar-body {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .pillar-body strong { color: var(--text-soft); font-weight: 500; }
+
+  .approach-note {
+    margin-top: 28px;
+    padding: 24px 28px;
+    background: var(--grad-soft);
+    border: 1px solid rgba(107,141,255,0.2);
+    border-radius: var(--radius);
+  }
+  .approach-note-text {
+    font-size: 14px;
+    color: var(--text-soft);
+    line-height: 1.7;
+  }
+  .approach-note-text strong { color: var(--cyan); font-weight: 600; }
+
+  /* TIER CARDS */
+  .tier-header {
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: end; gap: 40px;
+    padding-bottom: 36px; border-bottom: 1px solid var(--line);
+  }
+  .tier-meta { display: flex; flex-direction: column; gap: 14px; }
+  .tier-marker {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .tier-name {
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+  .tier-tagline {
+    font-size: 15px; color: var(--text-soft);
+    max-width: 480px; line-height: 1.65; margin-top: 4px;
+  }
+
+  /* Price block — mirrors the maiaa.ai screenshot */
+  .tier-price-block {
+    display: flex; flex-direction: column;
+    align-items: flex-end; gap: 6px;
+  }
+  .tier-price {
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    display: flex; align-items: baseline; gap: 4px;
+  }
+  .tier-price .currency {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--text-soft);
+  }
+  .tier-price.grad-price,
+  .tier-price.grad-price .currency {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .tier-price.gold-price,
+  .tier-price.gold-price .currency {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .tier-payment-note {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  .tier-timeline {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-weight: 500;
+    margin-top: 4px;
+    padding: 10px 16px;
+    border: 1px solid rgba(79,216,229,0.25);
+    border-radius: 99px;
+    background: rgba(79,216,229,0.05);
+    display: inline-block;
+  }
+
+  .tier-body {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 56px; margin-top: 48px;
+  }
+
+  .tier-section-label {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 500;
+  }
+
+  /* Circle checkmarks — exactly like maiaa.ai pricing cards */
+  .deliverable-list { display: flex; flex-direction: column; gap: 14px; }
+  .deliverable-item {
+    display: grid; grid-template-columns: 22px 1fr;
+    gap: 14px; align-items: start;
+  }
+  .check-circle {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(79,216,229,0.12);
+    border: 1px solid rgba(79,216,229,0.4);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--cyan);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .check-circle::after { content: '✓'; }
+  .deliverable-text {
+    font-size: 14px;
+    color: var(--text-soft);
+    line-height: 1.6;
+  }
+  .deliverable-text strong { color: var(--text); font-weight: 600; }
+
+  .tier-extras { display: flex; flex-direction: column; }
+  .extra-row {
+    display: grid; grid-template-columns: 1fr auto;
+    padding: 14px 0; border-bottom: 1px solid var(--line);
+    gap: 16px; align-items: center;
+  }
+  .extra-row:last-child { border-bottom: none; }
+  .extra-name { font-size: 13.5px; color: var(--text-soft); }
+  .extra-name strong { color: var(--text); font-weight: 500; }
+  .extra-value {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .tier-flag {
+    position: absolute; top: 32px; right: 88px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 99px;
+    background: var(--grad);
+    color: var(--bg);
+    font-weight: 600;
+    box-shadow: 0 0 24px rgba(107,141,255,0.3);
+  }
+  .tier-flag.gold {
+    background: var(--grad-gold);
+    color: var(--bg);
+    box-shadow: 0 0 24px rgba(232,201,122,0.3);
+  }
+
+  /* Tier 03 gold accents */
+  #tier-3 .check-circle {
+    background: rgba(232,201,122,0.12);
+    border-color: rgba(232,201,122,0.4);
+    color: var(--gold);
+  }
+  #tier-3 .extra-value { color: var(--gold); }
+  #tier-3 .tier-timeline { color: var(--gold); }
+
+  /* COMPARISON */
+  .compare-wrap {
+    margin-top: 48px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .compare-table { width: 100%; border-collapse: collapse; }
+  .compare-table thead th {
+    padding: 28px 24px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-2);
+    vertical-align: bottom;
+  }
+  .compare-th-name {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  .compare-th-name.grad {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .compare-th-name.gold-text {
+    background: var(--grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .compare-th-price {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .compare-th-feature {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .compare-table tbody td {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--line);
+    font-size: 13.5px;
+    color: var(--text);
+    vertical-align: middle;
+  }
+  .compare-table tbody tr:last-child td { border-bottom: none; }
+  .compare-table tbody td:first-child {
+    color: var(--muted);
+    font-size: 13px;
+    border-right: 1px solid var(--line);
+  }
+  .compare-cat-row td {
+    background: var(--bg-2);
+    font-size: 11px !important;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cyan) !important;
+    padding: 12px 24px !important;
+    font-weight: 500;
+  }
+
+  .check { color: var(--cyan); font-size: 16px; }
+  .check.gold { color: var(--gold); }
+  .nope { color: var(--muted-2); font-size: 16px; }
+  .partial {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .partial.gold-text { color: var(--gold); }
+
+  /* TIMELINE */
+  .timeline {
+    margin-top: 56px;
+    display: flex; flex-direction: column;
+    border-left: 1px solid var(--line);
+  }
+  .timeline-row {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 40px; padding: 28px 0 28px 36px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .timeline-row::before {
+    content: ''; position: absolute;
+    left: -6px; top: 38px;
+    width: 11px; height: 11px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--bg), 0 0 16px rgba(79,216,229,0.5);
+  }
+  .timeline-row:last-child { border-bottom: none; }
+  .timeline-week {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    padding-top: 4px;
+    font-weight: 500;
+  }
+  .timeline-content { display: flex; flex-direction: column; gap: 8px; }
+  .timeline-title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  .timeline-body {
+    font-size: 14px; color: var(--muted); line-height: 1.7;
+    max-width: 640px;
+  }
+
+  /* COORDINATION */
+  .coord-card {
+    margin-top: 48px;
+    padding: 48px 52px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .coord-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: var(--grad);
+  }
+  .coord-block { display: flex; flex-direction: column; gap: 16px; }
+  .coord-label {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-weight: 500;
+  }
+  .coord-title {
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .coord-body {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+  .coord-body strong { color: var(--text-soft); font-weight: 500; }
+  .coord-divider { width: 1px; background: var(--line); }
+
+  /* NEXT STEPS */
+  .next-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-top: 56px;
+  }
+  .next-step {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    display: flex; flex-direction: column; gap: 14px;
+    min-height: 240px;
+    transition: all 0.3s;
+  }
+  .next-step:hover {
+    border-color: rgba(79,216,229,0.25);
+    transform: translateY(-3px);
+  }
+  .next-num {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--cyan);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .next-title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--text);
+    letter-spacing: -0.015em;
+  }
+  .next-body {
+    font-size: 13.5px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .signoff {
+    margin-top: 80px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 60px; align-items: end;
+    padding-top: 40px; border-top: 1px solid var(--line);
+  }
+  .signoff-text {
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text);
+    max-width: 600px;
+    letter-spacing: -0.015em;
+  }
+  .signoff-meta {
+    display: flex; flex-direction: column; gap: 8px;
+    align-items: flex-end;
+  }
+  .signoff-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .signoff-name::before {
+    content: '';
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--grad);
+  }
+  .signoff-role {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .signoff-cta {
+    margin-top: 14px;
+    padding: 14px 24px;
+    background: var(--grad);
+    color: var(--bg);
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: transform 0.2s;
+  }
+  .signoff-cta:hover { transform: translateY(-2px); }
+
+  .footer-section {
+    padding: 28px 88px;
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .footer-left {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--muted-2);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .footer-right {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .section > * { opacity: 0; animation: fadeUp 0.7s ease forwards; }
+  .section > *:nth-child(1) { animation-delay: 0.05s; }
+  .section > *:nth-child(2) { animation-delay: 0.18s; }
+  .section > *:nth-child(3) { animation-delay: 0.32s; }
+  .section > *:nth-child(4) { animation-delay: 0.46s; }
+  .section > *:nth-child(5) { animation-delay: 0.6s; }
+
+  /* ───────────────────────────────────────────
+     TABLET (≤960px)
+  ─────────────────────────────────────────── */
+  @media (max-width: 960px) {
+    .section { padding: 64px 48px; min-height: auto; }
+    .brand-mark { left: 48px; }
+    .scroll-hint { left: 48px; }
+    .footer-section { padding: 24px 48px; }
+    .tier-flag { right: 48px; }
+
+    .cover-grid,
+    .context-grid,
+    .coord-card,
+    .retainer-grid {
+      grid-template-columns: 1fr !important;
+      gap: 32px;
+    }
+
+    .coord-card { padding: 36px 32px; }
+    .coord-divider { display: none; }
+    .retainer-left, .retainer-right { padding: 32px 28px; }
+    .retainer-left { border-right: none; border-bottom: 1px solid var(--line); }
+
+    .approach-pillars,
+    .next-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .tier-body { grid-template-columns: 1fr; gap: 36px; }
+  }
+
+  /* ───────────────────────────────────────────
+     MOBILE (≤640px)
+  ─────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    body { font-size: 14px; }
+
+    /* Tighter padding, no fixed brand mark eating space */
+    .section {
+      padding: 56px 22px;
+      min-height: auto;
+      scroll-snap-align: none;
+    }
+    html { scroll-snap-type: none; }
+
+    /* Reposition brand mark inline at top of page rather than fixed */
+    .brand-mark {
+      position: absolute;
+      top: 20px; left: 22px;
+      font-size: 13px;
+    }
+    .brand-mark::before { width: 18px; height: 18px; }
+
+    /* Hide nav dots — too cramped for mobile, scroll works fine */
+    .nav-dots { display: none; }
+
+    .scroll-hint {
+      bottom: 24px; left: 22px;
+      font-size: 9.5px;
+    }
+    .scroll-hint::after { width: 20px; }
+
+    .footer-section {
+      padding: 20px 22px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    /* Typography downsized — clamp already helps but tighten further */
+    .display { font-size: 38px; line-height: 1.05; }
+    .h2      { font-size: 30px; line-height: 1.1; }
+    .lead    { font-size: 16px; margin-top: 20px; }
+    .eyebrow { font-size: 10px; margin-bottom: 18px; }
+
+    /* Cover */
+    .cover-grid { gap: 28px; margin-top: 32px; }
+    .cover-tags { gap: 6px; margin-top: 24px; }
+    .tag { font-size: 10px; padding: 6px 11px; }
+    .cover-meta-cell { padding: 14px 16px; gap: 10px; }
+    .meta-label { font-size: 10px; }
+    .meta-value { font-size: 13px; }
+
+    /* Context cards */
+    .context-grid { gap: 16px; margin-top: 36px; }
+    .context-card { padding: 28px 22px; gap: 14px; }
+    .context-card h3 { font-size: 20px; }
+    .context-card p { font-size: 13.5px; }
+    .context-item { font-size: 13px; }
+
+    /* Approach pillars stack on mobile */
+    .approach-pillars {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 36px;
+    }
+    .pillar { padding: 28px 22px; gap: 12px; }
+    .pillar-title { font-size: 19px; }
+    .pillar-body { font-size: 13px; }
+    .approach-note { padding: 18px 20px; margin-top: 20px; }
+    .approach-note-text { font-size: 13px; }
+
+    /* Tier headers — stack price below title on mobile */
+    .tier-header {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-bottom: 28px;
+    }
+    .tier-price-block {
+      align-items: flex-start;
+    }
+    .tier-name { font-size: 44px; }
+    .tier-tagline { font-size: 14px; max-width: none; }
+    .tier-marker { font-size: 10px; }
+    .tier-price { font-size: 52px; }
+    .tier-price .currency { font-size: 26px; }
+
+    .tier-flag {
+      position: absolute;
+      top: 20px;
+      right: 22px;
+      font-size: 9.5px;
+      padding: 6px 12px;
+      letter-spacing: 0.14em;
+    }
+
+    .tier-body {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      margin-top: 32px;
+    }
+    .tier-section-label { font-size: 10px; margin-bottom: 16px; }
+    .deliverable-text { font-size: 13.5px; }
+    .extra-row { padding: 12px 0; }
+    .extra-name { font-size: 13px; }
+    .extra-value { font-size: 10px; }
+
+    /* Comparison table — horizontally scroll on mobile (4 columns won't fit) */
+    .compare-wrap {
+      margin-top: 32px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 12px;
+    }
+    .compare-table { min-width: 640px; }
+    .compare-table thead th { padding: 18px 14px; }
+    .compare-th-name { font-size: 17px; }
+    .compare-th-price { font-size: 11px; }
+    .compare-table tbody td {
+      padding: 11px 14px;
+      font-size: 12.5px;
+    }
+    .compare-table tbody td:first-child { font-size: 12px; }
+    .compare-cat-row td {
+      padding: 10px 14px !important;
+      font-size: 10px !important;
+    }
+    /* Hint that the table scrolls */
+    .compare-wrap::after {
+      content: '← scroll →';
+      display: block;
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      color: var(--muted-2);
+      padding: 10px;
+      border-top: 1px solid var(--line);
+      background: var(--bg-2);
+      text-transform: uppercase;
+    }
+
+    /* Retainer */
+    .retainer-card { margin-top: 36px; }
+    .retainer-name { font-size: 28px; }
+    .retainer-tagline { font-size: 13.5px; max-width: none; }
+    .retainer-price { font-size: 44px; }
+    .retainer-price .currency { font-size: 22px; }
+    .retainer-price .period { font-size: 14px; }
+    .retainer-list {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .retainer-list .deliverable-text { font-size: 13px; }
+    .retainer-footnote { font-size: 12px; }
+
+    /* Timeline — tighten the rail */
+    .timeline { margin-top: 36px; }
+    .timeline-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 22px 0 22px 24px;
+    }
+    .timeline-row::before {
+      left: -5px;
+      top: 30px;
+      width: 9px; height: 9px;
+    }
+    .timeline-week { font-size: 10px; padding-top: 0; }
+    .timeline-title { font-size: 19px; }
+    .timeline-body { font-size: 13.5px; }
+
+    /* Coord card */
+    .coord-card {
+      margin-top: 32px;
+      padding: 32px 24px;
+      gap: 28px;
+    }
+    .coord-title { font-size: 22px; }
+    .coord-body { font-size: 13.5px; }
+
+    /* Next steps stack */
+    .next-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 36px;
+    }
+    .next-step {
+      padding: 28px 22px;
+      min-height: auto;
+      gap: 10px;
+    }
+    .next-title { font-size: 19px; }
+    .next-body { font-size: 13px; }
+
+    .signoff {
+      margin-top: 48px;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding-top: 32px;
+    }
+    .signoff-text { font-size: 22px; }
+    .signoff-meta { align-items: flex-start; }
+    .signoff-cta { padding: 12px 20px; font-size: 12.5px; }
+  }
+
+  /* ───────────────────────────────────────────
+     SMALL MOBILE (≤380px) — squeeze a bit more
+  ─────────────────────────────────────────── */
+  @media (max-width: 380px) {
+    .section { padding: 48px 18px; }
+    .brand-mark { left: 18px; }
+    .display { font-size: 34px; }
+    .h2 { font-size: 26px; }
+    .tier-name { font-size: 38px; }
+    .tier-price { font-size: 46px; }
+    .tier-price .currency { font-size: 22px; }
+  }
+
+  /* RETAINER */
+  .retainer-card {
+    margin-top: 56px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+  }
+  .retainer-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    background: var(--grad);
+  }
+  .retainer-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1.4fr;
+    gap: 0;
+  }
+  .retainer-left {
+    padding: 44px 48px;
+    border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
+  }
+  .retainer-tag {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-weight: 500;
+  }
+  .retainer-name {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-top: 12px;
+  }
+  .retainer-tagline {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-top: 14px;
+    max-width: 360px;
+  }
+  .retainer-price {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    display: flex; align-items: baseline; gap: 4px;
+  }
+  .retainer-price .currency {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-soft);
+  }
+  .retainer-price .period {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: -0.01em;
+    margin-left: 6px;
+  }
+  .retainer-price-block { display: flex; flex-direction: column; gap: 6px; }
+  .retainer-payment-note {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .retainer-right {
+    padding: 44px 48px;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .retainer-section-label {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    font-weight: 500;
+  }
+  .retainer-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 28px;
+  }
+  .retainer-list .deliverable-item { gap: 12px; }
+  .retainer-list .deliverable-text { font-size: 13.5px; }
+  .retainer-footnote {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.65;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .retainer-footnote strong { color: var(--text-soft); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="brand-mark">maiaa.ai</div>
+
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" onclick="scrollToSection(0)"></div>
+  <div class="nav-dot" onclick="scrollToSection(1)"></div>
+  <div class="nav-dot" onclick="scrollToSection(2)"></div>
+  <div class="nav-dot" onclick="scrollToSection(3)"></div>
+  <div class="nav-dot" onclick="scrollToSection(4)"></div>
+  <div class="nav-dot" onclick="scrollToSection(5)"></div>
+  <div class="nav-dot" onclick="scrollToSection(6)"></div>
+  <div class="nav-dot" onclick="scrollToSection(7)"></div>
+  <div class="nav-dot" onclick="scrollToSection(8)"></div>
+  <div class="nav-dot" onclick="scrollToSection(9)"></div>
+</nav>
+
+<!-- S0 · COVER -->
+<section class="section" id="s0">
+  <div class="eyebrow">Web Development Proposal · 2026</div>
+  <div class="display">A storefront worth<br>the <span class="grad">40-year story.</span></div>
+  <div class="cover-grid">
+    <div>
+      <p class="lead">Two packages for rebuilding miracleofaloe.com on Shopify — engineered to convert, designed to <strong>finally match the brand behind it</strong>, and built to compound the SEO foundation already underway.</p>
+      <div class="cover-tags">
+        <div class="tag cyan">Shopify rebuild</div>
+        <div class="tag">50 product pages</div>
+        <div class="tag">CRO-first</div>
+        <div class="tag">SEO-aligned</div>
+      </div>
+    </div>
+    <div class="cover-meta">
+      <div class="cover-meta-cell"><span class="meta-label">Prepared for</span><span class="meta-value">Miracle of Aloe</span></div>
+      <div class="cover-meta-cell"><span class="meta-label">Prepared by</span><span class="meta-value">maiaa.ai</span></div>
+      <div class="cover-meta-cell"><span class="meta-label">Scope</span><span class="meta-value">Full Shopify rebuild</span></div>
+      <div class="cover-meta-cell"><span class="meta-label">Packages</span><span class="meta-value">Two options</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll for the full picture</div>
+</section>
+
+<!-- S1 · CONTEXT -->
+<section class="section" id="s1">
+  <div class="eyebrow">Where the brand stands</div>
+  <div class="h2">A real product.<br>An <span class="grad">underserved storefront.</span></div>
+  <div class="context-grid">
+    <div class="context-card">
+      <h3>What's already working</h3>
+      <p>Miracle of Aloe has the things most DTC brands spend years trying to build. <strong>40 years of family heritage</strong>, a proprietary UltraAloe® process, retail distribution in Walmart and Walgreens, and <strong>1,052 reviews averaging 4.9 stars</strong>. That's an exceptional foundation.</p>
+      <div class="context-list">
+        <div class="context-item"><span><strong>Brand authority</strong> — four decades, family-owned, proprietary IP</span></div>
+        <div class="context-item"><span><strong>Social proof</strong> — 1,052 reviews on Bay Reviews, 4.9 average</span></div>
+        <div class="context-item"><span><strong>Distribution</strong> — Walmart, Walgreens, plus DTC traffic</span></div>
+        <div class="context-item"><span><strong>SEO momentum</strong> — technical roadmap already in motion with our partner</span></div>
+      </div>
+    </div>
+    <div class="context-card">
+      <h3>What the current site doesn't do</h3>
+      <p>The story isn't being told. The reviews aren't being shown. The product range isn't being merchandised. The brand reads as <strong>a generic Shopify store, not a 40-year category leader.</strong> Conversion infrastructure that's standard in 2026 — schema, sticky carts, subscription logic, post-purchase upsells — is absent or broken.</p>
+      <div class="context-list">
+        <div class="context-item"><span><strong>No brand story</strong> — heritage, family, UltraAloe® process invisible</span></div>
+        <div class="context-item"><span><strong>No conversion infrastructure</strong> — flat PDPs, no subscriptions, no upsells</span></div>
+        <div class="context-item"><span><strong>Technical debt</strong> — 503 errors, broken links, redirect chains, zero schema</span></div>
+        <div class="context-item"><span><strong>Mobile experience</strong> — slow, generic, doesn't reflect the brand quality</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S2 · APPROACH -->
+<section class="section" id="s2">
+  <div class="eyebrow">How we'll build it</div>
+  <div class="h2">Three principles.<br>Every tier. <span class="grad">No exceptions.</span></div>
+  <div class="approach-pillars">
+    <div class="pillar">
+      <div class="pillar-num">01 / Conversion</div>
+      <div class="pillar-title">Built to sell, not just to look good</div>
+      <div class="pillar-body">Every page decision starts with <strong>"does this move the buyer forward?"</strong> Sticky add-to-cart, trust strip, urgency cues, post-purchase upsells, abandoned cart logic. Beautiful is the floor. Converting is the ceiling.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">02 / SEO-aligned</div>
+      <div class="pillar-title">The rebuild protects the SEO investment</div>
+      <div class="pillar-body">We build with <strong>schema baked into the templates</strong>, clean URL structure, semantic HTML, and Core Web Vitals as a release criterion. Every line of code complements the SEO roadmap rather than working against it.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">03 / Brand-first</div>
+      <div class="pillar-title">A storefront that matches the story</div>
+      <div class="pillar-body">40 years of heritage, family ownership, and proprietary process get <strong>built into the experience</strong> — not hidden in a forgotten "About" page. The site finally feels like the category leader it actually is.</div>
+    </div>
+  </div>
+  <div class="approach-note">
+    <div class="approach-note-text">
+      <strong>One platform decision worth flagging up-front.</strong> Both packages stay on Shopify. The current technical issues are fixable on Shopify — and migrating off it would invalidate the SEO work already in motion, lose URL equity, and add 4–6 weeks to the timeline. Shopify is the right call. We're rebuilding what sits on top of it.
+    </div>
+  </div>
+</section>
+
+<!-- S3 · TIER 01 — FOUNDATION -->
+<section class="section" id="tier-1">
+  <div class="eyebrow">Package One · Foundation</div>
+  <div class="tier-header">
+    <div class="tier-meta">
+      <span class="tier-marker">For brands ready to launch fast</span>
+      <div class="tier-name">Foundation</div>
+      <p class="tier-tagline">A clean, conversion-focused Shopify rebuild on a premium theme. Modern, fast, all the essentials baked in. Live in six weeks.</p>
+    </div>
+    <div class="tier-price-block">
+      <div class="tier-timeline">6 weeks · Delivery</div>
+    </div>
+  </div>
+
+  <div class="tier-body">
+    <div>
+      <div class="tier-section-label">What's included</div>
+      <div class="deliverable-list">
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Premium Shopify theme setup</strong> — heavily customised version of an OS 2.0 theme (Impact, Symmetry, or similar), tuned to brand</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>50 product pages migrated</strong> — full catalogue moved with images, descriptions, variants, pricing</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Conversion-optimised PDP layout</strong> — sticky add-to-cart, trust badges, review snippets, cross-sells</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Schema baked in</strong> — Product, Review, Organisation schema in templates from day one</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Homepage refresh</strong> — hero, featured collections, brand story strip, social proof</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Email capture popup &amp; integration</strong> — popup, exit-intent capture, ESP integration of choice</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Collection pages</strong> — clean filtering across the four product categories</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Blog template</strong> — clean, SEO-ready template built to publish Luke's content strategy the moment it's written</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Mobile-first build</strong> — every layout designed for thumb-zone first, desktop second</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Core Web Vitals optimisation</strong> — image compression, lazy loading, lean theme code</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>301 redirect map</strong> — every old URL mapped to new, protecting SEO equity</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="tier-section-label">Apps configured (in client's name)</div>
+      <div class="tier-extras">
+        <div class="extra-row"><div class="extra-name"><strong>CookieYes</strong> — GDPR / CCPA compliance</div><div class="extra-value">Configured</div></div>
+        <div class="extra-row"><div class="extra-name"><strong>Judge.me</strong> — full migration from Bay Reviews</div><div class="extra-value">Migrated</div></div>
+        <div class="extra-row"><div class="extra-name"><strong>Appstle Subscriptions</strong> — basic subscribe &amp; save</div><div class="extra-value">Set up</div></div>
+        <div class="extra-row"><div class="extra-name"><strong>SA Variant Image Automator</strong> — variant logic across catalogue</div><div class="extra-value">Configured</div></div>
+      </div>
+
+      <div class="tier-section-label" style="margin-top: 36px;">Support after launch</div>
+      <div class="tier-extras">
+        <div class="extra-row"><div class="extra-name">Bug fixes &amp; tweaks</div><div class="extra-value">14 days</div></div>
+        <div class="extra-row"><div class="extra-name">Handover documentation</div><div class="extra-value">Included</div></div>
+        <div class="extra-row"><div class="extra-name">Loom walkthrough for the team</div><div class="extra-value">Included</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S4 · TIER 02 — SIGNATURE -->
+<section class="section" id="tier-2">
+  <div class="tier-flag">Recommended</div>
+  <div class="eyebrow">Package Two · Signature</div>
+  <div class="tier-header">
+    <div class="tier-meta">
+      <span class="tier-marker">The flagship rebuild</span>
+      <div class="tier-name"><span class="grad">Signature</span></div>
+      <p class="tier-tagline">A fully custom Shopify build. Bespoke design system, 40-year story woven through, and every piece of conversion and storytelling infrastructure the brand actually deserves.</p>
+    </div>
+    <div class="tier-price-block">
+      <div class="tier-timeline">8 weeks · Delivery</div>
+    </div>
+  </div>
+
+  <div class="tier-body">
+    <div>
+      <div class="tier-section-label">Everything in Foundation, plus</div>
+      <div class="deliverable-list">
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Fully custom design system</strong> — typography, colour, motion language, and component library built from scratch for the brand</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Custom homepage &amp; PDP templates</strong> — designed for Miracle of Aloe specifically, not adapted from a theme</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Interactive brand story page</strong> — the 40-year heritage, UltraAloe® process, and farm-to-bottle journey brought to life</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Advanced animation system</strong> — scroll-driven storytelling, pinned sections, and micro-interactions throughout (GSAP)</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Product finder / quiz</strong> — "what's right for me?" flow that routes buyers to the correct product and captures email</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Advanced PDP features</strong> — image zoom, ingredient deep-dives, "what's inside" reveal, before/after carousels</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Cart drawer with cross-sell</strong> — frequently bought together, free shipping progress bar, gift options</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Post-purchase upsell flow</strong> — one-click upsell after checkout to lift AOV</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Full Klaviyo integration</strong> — welcome series, abandoned cart, browse abandonment, post-purchase flows</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Performance target: sub-2s LCP</strong> — performance budget treated as a design constraint, not an afterthought</div></div>
+        <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Blog as a conversion engine</strong> — custom blog template with inline product recommendations, author profiles, category hubs, related posts, and contextual product cards that turn SEO traffic into buyers rather than bouncing readers</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="tier-section-label">Expanded apps &amp; tooling</div>
+      <div class="tier-extras">
+        <div class="extra-row"><div class="extra-name"><strong>Appstle</strong> — subscriptions + loyalty + bundles</div><div class="extra-value">Full setup</div></div>
+        <div class="extra-row"><div class="extra-name"><strong>Judge.me</strong> — UGC widgets, Q&amp;A, photo reviews</div><div class="extra-value">Advanced</div></div>
+        <div class="extra-row"><div class="extra-name"><strong>GA4 + conversion tracking</strong></div><div class="extra-value">Configured</div></div>
+        <div class="extra-row"><div class="extra-name"><strong>Microsoft Clarity</strong> — heatmaps + session recordings</div><div class="extra-value">Installed</div></div>
+      </div>
+
+      <div class="tier-section-label" style="margin-top: 36px;">Support after launch</div>
+      <div class="tier-extras">
+        <div class="extra-row"><div class="extra-name">Bug fixes &amp; tweaks</div><div class="extra-value">30 days</div></div>
+        <div class="extra-row"><div class="extra-name">Two rounds of post-launch refinement</div><div class="extra-value">Included</div></div>
+        <div class="extra-row"><div class="extra-name">Team training session (1hr live)</div><div class="extra-value">Included</div></div>
+        <div class="extra-row"><div class="extra-name">Conversion review at day 30</div><div class="extra-value">Included</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S6 · COMPARISON -->
+<section class="section" id="s6">
+  <div class="eyebrow">Side by side</div>
+  <div class="h2">Both options.<br><span class="grad">One view.</span></div>
+
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="width: 40%;"><span class="compare-th-feature">Feature</span></th>
+          <th>
+            <div class="compare-th-name">Foundation</div>
+            <div class="compare-th-price">6 weeks · Delivery</div>
+          </th>
+          <th>
+            <div class="compare-th-name grad">Signature</div>
+            <div class="compare-th-price">8 weeks · Delivery</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="compare-cat-row"><td colspan="3">Build approach</td></tr>
+        <tr><td>Theme strategy</td><td><span class="partial">Premium theme</span></td><td><span class="check">Fully bespoke</span></td></tr>
+        <tr><td>50 product pages migrated</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Custom homepage design</td><td><span class="partial">Theme-based</span></td><td><span class="check">✓ Bespoke</span></td></tr>
+        <tr><td>Custom PDP template</td><td><span class="partial">Optimised theme</span></td><td><span class="check">✓ Bespoke</span></td></tr>
+
+        <tr class="compare-cat-row"><td colspan="3">Brand storytelling</td></tr>
+        <tr><td>Brand story page</td><td><span class="partial">Refresh</span></td><td><span class="check">✓ Interactive</span></td></tr>
+        <tr><td>UltraAloe® process visualisation</td><td><span class="nope">—</span></td><td><span class="check">✓ Interactive</span></td></tr>
+        <tr><td>Animation &amp; motion design</td><td><span class="partial">Subtle</span></td><td><span class="check">✓ GSAP system</span></td></tr>
+        <tr><td>Brand video integration</td><td><span class="nope">—</span></td><td><span class="check">✓</span></td></tr>
+
+        <tr class="compare-cat-row"><td colspan="3">Conversion infrastructure</td></tr>
+        <tr><td>Schema (Product, Review, Org)</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Sticky add-to-cart + trust strip</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Email capture + ESP integration</td><td><span class="check">✓</span></td><td><span class="check">✓ Full Klaviyo</span></td></tr>
+        <tr><td>Cart drawer + cross-sell</td><td><span class="partial">Basic</span></td><td><span class="check">✓ Advanced</span></td></tr>
+        <tr><td>Post-purchase upsell flow</td><td><span class="nope">—</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Product finder / quiz</td><td><span class="nope">—</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>A/B testing infrastructure</td><td><span class="nope">—</span></td><td><span class="check">✓</span></td></tr>
+
+        <tr class="compare-cat-row"><td colspan="3">Apps configured (in client's name)</td></tr>
+        <tr><td>CookieYes</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>Judge.me migration</td><td><span class="check">✓</span></td><td><span class="check">✓ Advanced</span></td></tr>
+        <tr><td>Appstle (subs / loyalty / bundles)</td><td><span class="partial">Subs only</span></td><td><span class="check">✓ Full</span></td></tr>
+        <tr><td>SA Variant Image Automator</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+
+        <tr class="compare-cat-row"><td colspan="3">Performance &amp; analytics</td></tr>
+        <tr><td>Core Web Vitals optimisation</td><td><span class="check">✓</span></td><td><span class="check">✓ &lt;2s LCP</span></td></tr>
+        <tr><td>GA4 + tracking setup</td><td><span class="nope">—</span></td><td><span class="check">✓ + GTM</span></td></tr>
+        <tr><td>Heatmaps + session recordings</td><td><span class="nope">—</span></td><td><span class="check">✓</span></td></tr>
+
+        <tr class="compare-cat-row"><td colspan="3">Post-launch support</td></tr>
+        <tr><td>Bug fix window</td><td><span class="partial">14 days</span></td><td><span class="partial">60 days</span></td></tr>
+        <tr><td>Conversion review</td><td><span class="nope">—</span></td><td><span class="check">Monthly × 3</span></td></tr>
+        <tr><td>Team training</td><td><span class="partial">Loom only</span></td><td><span class="check">2× live</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- S7 · OPTIONAL RETAINER -->
+<section class="section" id="s7-retainer">
+  <div class="eyebrow">Optional · Add to any tier</div>
+  <div class="h2">Keep the site<br><span class="grad">running smoothly.</span></div>
+
+  <div class="retainer-card">
+    <div class="retainer-grid">
+      <div class="retainer-left">
+        <div>
+          <div class="retainer-tag">Care &amp; Maintenance Retainer</div>
+          <div class="retainer-name">The Care Plan</div>
+          <p class="retainer-tagline">An optional monthly retainer for the brands that want a single point of contact for everything site-related — happy to talk through the details on the call.</p>
+        </div>
+      </div>
+
+      <div class="retainer-right">
+        <div class="retainer-section-label">What's included each month</div>
+        <div class="retainer-list">
+          <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Dedicated dev hours</strong> — copy edits, image swaps, small layout tweaks</div></div>
+          <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Theme &amp; app updates</strong> — kept on latest stable versions, security patched</div></div>
+          <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Performance monitoring</strong> — Core Web Vitals checked monthly, regressions flagged</div></div>
+          <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Uptime monitoring</strong> — alerts if the store goes down, fast response</div></div>
+          <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Monthly backup</strong> — full theme &amp; product data backed up off-site</div></div>
+          <div class="deliverable-item"><div class="check-circle"></div><div class="deliverable-text"><strong>Priority support</strong> — same-business-day response, direct Slack or email channel</div></div>
+        </div>
+        <div class="retainer-footnote">
+          <strong>Initial 3-month term</strong> to give the retainer time to prove its value, then rolls to month-to-month with 30 days' notice to cancel. No long-term lock-in beyond the first quarter.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S8 · TIMELINE -->
+<section class="section" id="s7">
+  <div class="eyebrow">How a build runs · using Signature as the example</div>
+  <div class="h2">Eight weeks.<br><span class="grad">Predictable.</span></div>
+
+  <div class="timeline">
+    <div class="timeline-row">
+      <div class="timeline-week">Week 01 · Discovery</div>
+      <div class="timeline-content">
+        <div class="timeline-title">Brand workshop &amp; technical baseline</div>
+        <div class="timeline-body">Kick-off call to define brand voice, photography direction, and conversion priorities. Full audit of existing Shopify store, app stack, and integrations. Wireframes signed off by end of week.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">Week 02 – 03 · Design</div>
+      <div class="timeline-content">
+        <div class="timeline-title">Full design system &amp; page designs</div>
+        <div class="timeline-body">Complete design system in Figma — typography, colour, component library, motion language. Homepage, PDP, collection, brand story, cart drawer, and quiz flow designed and reviewed. Two rounds of revisions built into the timeline.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">Week 04 – 06 · Build</div>
+      <div class="timeline-content">
+        <div class="timeline-title">Development &amp; product migration</div>
+        <div class="timeline-body">Custom theme built from the design system, schema implemented, all 50 products migrated, product finder quiz developed, GSAP animation system layered in, app stack configured. Staging environment shared for client review at end of week 05.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">Week 07 · Integrations &amp; QA</div>
+      <div class="timeline-content">
+        <div class="timeline-title">Klaviyo flows, testing, performance audit</div>
+        <div class="timeline-body">Full Klaviyo integration with abandoned cart, browse abandonment, and post-purchase flows. Cross-browser and cross-device testing. Core Web Vitals tuned to sub-2s LCP. Final client review round.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">Week 08 · Launch</div>
+      <div class="timeline-content">
+        <div class="timeline-title">Go-live &amp; handover</div>
+        <div class="timeline-body">301 redirect map applied, DNS migration if needed, soft launch then full launch. Loom walkthrough and live training session for the team. Full design system handover in Figma.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-week">Week 09 – 16 · Support</div>
+      <div class="timeline-content">
+        <div class="timeline-title">Post-launch optimisation</div>
+        <div class="timeline-body">60-day bug-fix window, two rounds of refinement based on real user data, monthly conversion reviews with recommendations for next-quarter improvements.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S8 · COORDINATION -->
+<section class="section" id="s8">
+  <div class="eyebrow">Why this matters now</div>
+  <div class="h2">SEO and the rebuild,<br><span class="grad">working in lockstep.</span></div>
+
+  <div class="coord-card">
+    <div class="coord-block">
+      <div class="coord-label">The opportunity</div>
+      <div class="coord-title">Build the rebuild on top of the SEO work — not after it</div>
+      <div class="coord-body">The SEO roadmap currently in motion will fix the technical issues, implement schema, and start moving impressions back up. <strong>If the site is rebuilt afterwards on a different foundation, much of that work has to be redone.</strong> Coordinating the rebuild with the SEO timeline means schema, redirect logic, URL structure, and content strategy are all baked into the rebuild from day one — and the SEO investment compounds rather than resets.</div>
+    </div>
+
+    <div class="coord-divider"></div>
+
+    <div class="coord-block">
+      <div class="coord-label">The mechanics</div>
+      <div class="coord-title">One source of truth for technical decisions</div>
+      <div class="coord-body">We coordinate directly with the SEO partner on every technical decision: <strong>URL structure, schema implementation, redirect maps, site architecture, and the blog infrastructure</strong> where Luke's content strategy actually lives. The result is a single coherent system rather than two parallel workstreams stepping on each other. The brand gets one site, built once, optimised for everything that matters.</div>
+    </div>
+  </div>
+</section>
+
+<!-- S9 · NEXT STEPS -->
+<section class="section" id="s9">
+  <div class="eyebrow">From here</div>
+  <div class="h2">Three steps<br>to <span class="grad">kick-off.</span></div>
+
+  <div class="next-grid">
+    <div class="next-step">
+      <div class="next-num">01</div>
+      <div class="next-title">Book a call</div>
+      <div class="next-body">A 30-minute call to walk through the mockups, talk through which package fits best, and answer any questions on scope, timeline, or investment.</div>
+    </div>
+    <div class="next-step">
+      <div class="next-num">02</div>
+      <div class="next-title">Scope &amp; kick-off</div>
+      <div class="next-body">We lock down exact scope, timeline, and terms. 50% upfront to lock your slot in our schedule, remaining 50% on launch. Standard MSA — happy to walk through the terms on the call.</div>
+    </div>
+    <div class="next-step">
+      <div class="next-num">03</div>
+      <div class="next-title">Kick-off within 7 days</div>
+      <div class="next-body">Discovery workshop scheduled within a week of deposit. Project kicks off, slot is yours, work begins immediately on the timeline above.</div>
+    </div>
+  </div>
+
+  <div class="signoff">
+    <div class="signoff-text">
+      Looking forward to building the storefront <span class="grad">that finally matches the 40-year story behind the brand.</span>
+    </div>
+    <div class="signoff-meta">
+      <div class="signoff-name">maiaa.ai</div>
+      <div class="signoff-role">Web Development</div>
+      <a href="mailto:jack@maiaa.ai" class="signoff-cta">Start the project →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer-section">
+  <div class="footer-left">maiaa.ai · Web Development Proposal · Miracle of Aloe</div>
+  <div class="footer-right">jack@maiaa.ai · Valid 30 days</div>
+</footer>
+
+<script>
+  const sections = ['s0','s1','s2','tier-1','tier-2','s6','s7-retainer','s7','s8','s9'];
+  const dots = document.querySelectorAll('.nav-dot');
+
+  function scrollToSection(i) {
+    document.getElementById(sections[i]).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const i = sections.indexOf(e.target.id);
+        if (i >= 0) dots.forEach((d, j) => d.classList.toggle('active', i === j));
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+</script>
+</body>
+</html>
