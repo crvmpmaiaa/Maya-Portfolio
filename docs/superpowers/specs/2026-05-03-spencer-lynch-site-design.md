@@ -52,8 +52,9 @@ His current site (howdidhedothat.co.uk) is dated and undersells him by a wide ma
 | **Tagline / brand line** | "Memorable Magic" (already on logo); headline copy steals "How did he do that." from existing domain |
 | **Aesthetic direction** | "The Card Maker's Library" — black, cream, foiled gold. Watchmaker-grade restraint. Cinematic full-bleed video moments allowed. |
 | **Animated Spencer character** | Hybrid: **B (Editorial Illustration)** as everyday host, **A (Photoreal Cinematic via Kling)** reserved for rare big trick reveals, **C (Shadow Play)** used only for the residency case-study section |
-| **Showreel pattern** | David Penn pattern — autoplay, muted, looping, no native controls, hover reveals 🔊 unmute + ⤢ expand. Frame is a film-slate cinema window with gold corner brackets. |
-| **Showreel size** | Max ~720px wide on desktop (sized to keep 1024×576 source pixel-honest on retina). Two-tier: 20-30s hero loop + full 2:07 on click-to-expand. |
+| **Showreel pattern** | David Penn pattern — autoplay, muted, looping, no native controls, hover reveals 🔊 unmute + ⤢ expand affordances. Frame is a film-slate cinema window with gold corner brackets. |
+| **Showreel size** | Max ~720px wide on desktop (16:9). Source serves 1080p adaptively (Vimeo). |
+| **Showreel source** | Vimeo embed `vimeo.com/214361408` ("Spencer Lynch Showreel - Memorable Magic", 2017 upload) in `background=1` chromeless mode with `dnt=1`. Local 1024×576 MP4 retained as fallback only. |
 | **Three category clip tiles** | Close-Up · Tech Illusions · Big Events (David Penn pattern) |
 | **Credentials structure** | Five sections — § 01 Stadium Years (typographic), § 02 Boardrooms (InfiniteSlider grayscale logo cloud), § 03 The Quiet Money (financial services), § 04 The Work That Matters (charity, gold-accent panel), § 05 As Seen On (broadcasters) |
 | **Logo cloud component** | shadcn-style `InfiniteSlider` + `ProgressiveBlur` (the React component supplied during brainstorming) — grayscale logos, hover-slowdown |
@@ -193,20 +194,26 @@ Production:
 
 ### Hero (homepage)
 
-- Source: 20-30s **hero-loop cut** (TBD from Spencer) — Spencer's strongest visual moments, edited for muted playback (faces, reactions, card moments — no long talking heads)
-- Same 1024×576 spec; encoded H.264 + AAC; `<video autoplay muted loop playsinline preload="metadata">`
-- Frame: film-slate container with gold corner brackets, slate header/footer
-- Max width: 720px on desktop, full-width on mobile
-- Hover reveals 🔊 unmute and ⤢ expand affordances; both invisible until invited
-- Static poster image extracted from a strong frame for the brief moment before video buffers
+- **Source: Vimeo embed** — `https://player.vimeo.com/video/214361408?background=1&autoplay=1&loop=1&muted=1&dnt=1`
+- `background=1` is Vimeo's chromeless mode: no controls, no Vimeo logo overlay, no end card, autoplay, muted, looped — exactly the cinematic ambient feel we want
+- `dnt=1` suppresses Vimeo's tracking cookies (privacy posture, Lighthouse-friendly)
+- Vimeo serves up to 1080p adaptively based on bandwidth — quality is significantly better than the local 1024×576 fallback
+- Frame: film-slate container with gold corner brackets and gilded slate header/footer (e.g. "SL · Reel · 2026" / "Memorable Magic · 02:07")
+- Max width: 720px on desktop, full-width on mobile, 16:9 aspect-ratio container
+- Hover reveals 🔊 (open Vimeo with sound) and ⤢ (open Vimeo fullscreen) affordances as external links to the Vimeo page in a new tab — Vimeo's player JS isn't directly controllable from `background=1`, so local toggles aren't an option without abandoning background mode
+- A static poster image (extracted from a strong frame) renders behind the iframe so visitors don't see a blank black box during the brief Vimeo bootstrap
 
-### Click-to-expand
+### Local MP4 fallback
 
-Clicking ⤢ expand opens the **full 2:07 reel** in a fullscreen overlay with sound and native controls (so visitors can scrub). Press Esc / click backdrop to dismiss.
+The local file at `assets/spencer-lynch/video/Spencer Lynch Memorable Magic Copy.mp4` (1024×576, ~27.5 MB) is retained as a fallback for: (a) Vimeo outage / network reachability issues, (b) offline preview environments, (c) if a future privacy review requires removing the third-party iframe entirely. The build copies this file to `/spencer-lynch/public/video/showreel-fallback.mp4` and uses it via a feature flag, not by default.
 
 ### Dedicated `/showreel` page
 
-Long-form home for the 2:07 reel + any future longer cuts. Eventually a card-style index of named performances.
+Long-form home for the reel with sound + native Vimeo controls (so visitors can scrub). Embedded with default Vimeo params (no `background=1`), maximum-quality preset, full chrome.
+
+### Note on the source video
+
+The reel currently on Vimeo was uploaded **2017-04-23**. None of Spencer's recent (2017+) Anfield, Wrexham, or major-brand work is featured. The site can ship with this reel as-is, but commissioning a 2026-current reel is a strong v1.x candidate. Tracked in Open Questions.
 
 ## Credentials — Five-Section Treatment
 
@@ -243,7 +250,7 @@ Trust signals adjacent: **LFC residency stamp** (custom badge — "Resident Magi
 | Animation | framer-motion (+ `motion` runtime as required by ProgressiveBlur) |
 | Slider deps | `react-use-measure` (used by InfiniteSlider) |
 | Fonts | Google Fonts via `next/font` — Playfair Display, Inter, JetBrains Mono |
-| Video | Native HTML5 `<video>`; no third-party player |
+| Video | Vimeo iframe embed (`background=1` mode) for the hero showreel + the `/showreel` page; native HTML5 `<video>` for category clips and the local MP4 fallback |
 | Forms | shadcn `Form` + react-hook-form + zod validation; submission to a serverless `/api/enquiry` POST that emails Spencer |
 | Hosting | Vercel (recommended; supports Next.js App Router and serverless API routes natively) |
 | Analytics | Vercel Analytics or Plausible (privacy-respecting); deferred to v1.1 if not blocking |
@@ -289,9 +296,10 @@ Raw assets live at `/Users/admin/Desktop/3D website/assets/spencer-lynch/` durin
 
 ### Delivered
 
-| Asset | Path | Notes |
+| Asset | Path / URL | Notes |
 |---|---|---|
-| Showreel (full) | `assets/spencer-lynch/video/Spencer Lynch Memorable Magic Copy.mp4` | 1024×576, 25fps, 2:07, ~27.5 MB |
+| Showreel (primary, 1080p) | `https://vimeo.com/214361408` | "Spencer Lynch Showreel - Memorable Magic" — 2:07, uploaded 2017-04-23, embedded via `background=1` |
+| Showreel (local fallback) | `assets/spencer-lynch/video/Spencer Lynch Memorable Magic Copy.mp4` | 1024×576, 25fps, 2:07, ~27.5 MB — same content, lower res; kept as offline / failover only |
 | Logo (colour) | `assets/spencer-lynch/logo/SL_Logo_Color_FINAL_JPG Copy.jpg` | JPG; vector source pending |
 | Logo (B/W) | `assets/spencer-lynch/logo/SL_Logo_BW_FINAL_JPG Copy.jpg` | JPG; vector source pending |
 | Logo (no pips) | `assets/spencer-lynch/logo/SL_LOGO_WITHOUT_PIPS2 Copy.jpg` | JPG; vector source pending |
@@ -300,8 +308,8 @@ Raw assets live at `/Users/admin/Desktop/3D website/assets/spencer-lynch/` durin
 
 | Asset | Priority | Notes |
 |---|---|---|
-| 20-30s hero loop cut | High | Strongest visual moments, muted-playback-friendly, same 1024×576 spec |
-| 60-90s medium reel (with sound) | Medium | For click-to-expand on hero / `/showreel` page |
+| Confirm Vimeo background-mode loop is seamless | High (verify during build) | Vimeo's `background=1` typically loops cleanly server-side. If the loop point on the 2017 reel feels jarring, fall back to a 20-30s hero loop cut hosted as a separate Vimeo upload |
+| 2026-current showreel | Medium | Existing reel is from 2017; commission a refresh that includes recent Anfield / Wrexham / major-brand work. Could ship post-launch — see Open Questions |
 | Vector logo source (AI/EPS/SVG) | High | If unavailable, dev re-trace during build |
 | Studio portrait for animated Spencer A | Medium | High-quality, well-lit, 3:4 portrait — feeds Kling for photoreal clips |
 | Performance photos | Medium | Anfield, Wrexham, weddings, corporate; ideally with strong reaction faces |
@@ -329,6 +337,8 @@ These need answers before or during early implementation; they do not block writ
 5. **Newsletter / audience capture.** Worth adding a single email-capture moment once social engine is producing? Defer to v1.1.
 6. **Number of tricks at launch.** Spec commits to N≥3. Decide whether to budget for 3 (lean) or 5 (impressive). Recommend 3 at launch with framework supporting more.
 7. **Deployment / domain handover.** Who owns the Vercel account and DNS? Spencer or maiaa.ai?
+8. **2026 showreel refresh.** Existing 2017 reel ships v1; commission a new reel covering recent work (Anfield post-2017, Wrexham, big-brand activations) for a v1.1 swap-in. Timing decision: pre-launch or post-launch?
+9. **Vimeo account upgrade.** Spencer's Vimeo is "basic" — no direct MP4 download, limited analytics. If we want self-hosted MP4 control or richer playback data, recommend a Plus/Pro upgrade. Not strictly required for v1 since `background=1` works on basic accounts.
 
 ## Phasing
 
