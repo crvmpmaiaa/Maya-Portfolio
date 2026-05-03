@@ -201,7 +201,11 @@ Production:
 - Frame: film-slate container with gold corner brackets and gilded slate header/footer (e.g. "SL · Reel · 2026" / "Memorable Magic · 02:07")
 - Max width: 720px on desktop, full-width on mobile, 16:9 aspect-ratio container
 - Hover reveals 🔊 (open Vimeo with sound) and ⤢ (open Vimeo fullscreen) affordances as external links to the Vimeo page in a new tab — Vimeo's player JS isn't directly controllable from `background=1`, so local toggles aren't an option without abandoning background mode
-- A static poster image (extracted from a strong frame) renders behind the iframe so visitors don't see a blank black box during the brief Vimeo bootstrap
+- A static **poster image** (a single still extracted from a strong frame of the local MP4 via `ffmpeg`, written as `/spencer-lynch/public/img/showreel-poster.jpg` during build) renders behind the iframe so visitors don't see a blank black box during the brief Vimeo bootstrap. The poster is also used as the reduced-motion replacement (see below).
+
+### Reduced motion
+
+Vimeo's `background=1` autoplays unconditionally and ignores `prefers-reduced-motion`. To honour Success Criterion #7, when `prefers-reduced-motion: reduce` is detected client-side, the Vimeo iframe is **not rendered** — the poster image is shown in its place inside the cinema frame, with a discreet "▶ Watch on Vimeo" link beneath that opens the Vimeo page in a new tab. Same affordance, no autoplay.
 
 ### Local MP4 fallback
 
@@ -338,7 +342,7 @@ These need answers before or during early implementation; they do not block writ
 6. **Number of tricks at launch.** Spec commits to N≥3. Decide whether to budget for 3 (lean) or 5 (impressive). Recommend 3 at launch with framework supporting more.
 7. **Deployment / domain handover.** Who owns the Vercel account and DNS? Spencer or maiaa.ai?
 8. **2026 showreel refresh.** Existing 2017 reel ships v1; commission a new reel covering recent work (Anfield post-2017, Wrexham, big-brand activations) for a v1.1 swap-in. Timing decision: pre-launch or post-launch?
-9. **Vimeo account upgrade.** Spencer's Vimeo is "basic" — no direct MP4 download, limited analytics. If we want self-hosted MP4 control or richer playback data, recommend a Plus/Pro upgrade. Not strictly required for v1 since `background=1` works on basic accounts.
+9. **Vimeo account upgrade.** Spencer's Vimeo is "basic" — no direct MP4 download from Vimeo, limited analytics. If we want self-hosted MP4 control going forward, or richer playback data, recommend a Plus/Pro upgrade. Not strictly required for v1: `background=1` works on basic accounts, and the existing local 1024×576 MP4 is the canonical fallback regardless of Vimeo plan.
 
 ## Phasing
 
@@ -351,7 +355,7 @@ The site is ready to ship when:
 1. A first-time visitor experiences a working magic trick within 5 seconds of page load
 2. The dual-residency credential is the dominant headline message above the fold
 3. The five credentials sections each render with their distinct visual treatment
-4. The showreel autoplays (muted, looped) without controls, with hover-revealed unmute + expand
+4. The showreel autoplays (muted, looped) without controls, with hover-revealed unmute + expand affordances (linking to the Vimeo page in a new tab)
 5. At least three working in-site tricks exist, with at least one hidden Easter-egg route
 6. The site passes Lighthouse performance ≥ 90, accessibility ≥ 95
 7. All motion respects `prefers-reduced-motion`
