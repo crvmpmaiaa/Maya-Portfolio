@@ -891,62 +891,68 @@ const VIMEO_ID = "214361408";
 const VIMEO_PAGE = `https://vimeo.com/${VIMEO_ID}`;
 const VIMEO_EMBED = `https://player.vimeo.com/video/${VIMEO_ID}?background=1&autoplay=1&loop=1&muted=1&dnt=1`;
 
+/**
+ * Poster always renders behind the iframe — paints immediately so
+ * visitors don't see a blank black box during the brief Vimeo bootstrap.
+ * Reduced-motion branch suppresses the iframe entirely and surfaces a
+ * "Watch on Vimeo" link in its place.
+ */
 export function HeroShowreel() {
   const reducedMotion = useReducedMotion();
 
-  if (reducedMotion) {
-    return (
-      <div className="group relative h-full w-full">
-        <Image
-          src="/img/showreel-poster.jpg"
-          alt="Spencer Lynch performing close-up magic"
-          fill
-          priority
-          sizes="(max-width: 768px) 100vw, 760px"
-          className="object-cover"
+  return (
+    <div className="group relative h-full w-full">
+      {/* poster — always behind */}
+      <Image
+        src="/img/showreel-poster.jpg"
+        alt="Spencer Lynch performing close-up magic"
+        fill
+        priority
+        sizes="(max-width: 768px) 100vw, 760px"
+        className="object-cover"
+      />
+
+      {!reducedMotion && (
+        <iframe
+          src={VIMEO_EMBED}
+          title="Spencer Lynch Showreel — Memorable Magic"
+          allow="autoplay; fullscreen; picture-in-picture"
+          referrerPolicy="strict-origin-when-cross-origin"
+          className="absolute inset-0 h-full w-full border-0"
         />
+      )}
+
+      {reducedMotion ? (
         <a
           href={VIMEO_PAGE}
           target="_blank"
           rel="noopener noreferrer"
-          className="absolute inset-x-0 bottom-4 mx-auto flex w-fit items-center gap-2 border border-gold/55 bg-ink-warm/80 px-4 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-cream backdrop-blur transition-colors hover:bg-gold/15"
+          className="absolute inset-x-0 bottom-4 z-10 mx-auto flex w-fit items-center gap-2 border border-gold/55 bg-ink-warm/80 px-4 py-2 font-mono text-[11px] uppercase tracking-eyebrow text-cream backdrop-blur transition-colors hover:bg-gold/15"
         >
           ▶ Watch on Vimeo
         </a>
-      </div>
-    );
-  }
-
-  return (
-    <div className="group relative h-full w-full">
-      <iframe
-        src={VIMEO_EMBED}
-        title="Spencer Lynch Showreel — Memorable Magic"
-        allow="autoplay; fullscreen; picture-in-picture"
-        referrerPolicy="strict-origin-when-cross-origin"
-        className="absolute inset-0 h-full w-full border-0"
-      />
-      {/* hover affordances */}
-      <div className="pointer-events-none absolute inset-0 z-10 flex items-end justify-end gap-2 bg-gradient-to-t from-black/45 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-        <a
-          href={VIMEO_PAGE}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Watch with sound on Vimeo"
-          className="pointer-events-auto flex h-9 w-9 items-center justify-center border border-gold/55 bg-ink-warm/75 text-cream backdrop-blur transition-colors hover:bg-gold/15"
-        >
-          🔊
-        </a>
-        <a
-          href={VIMEO_PAGE}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Open showreel fullscreen on Vimeo"
-          className="pointer-events-auto flex h-9 w-9 items-center justify-center border border-gold/55 bg-ink-warm/75 text-cream backdrop-blur transition-colors hover:bg-gold/15"
-        >
-          ⤢
-        </a>
-      </div>
+      ) : (
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-end justify-end gap-2 bg-gradient-to-t from-black/45 via-transparent to-transparent p-3 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+          <a
+            href={VIMEO_PAGE}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Watch with sound on Vimeo"
+            className="pointer-events-auto flex h-9 w-9 items-center justify-center border border-gold/55 bg-ink-warm/75 text-cream backdrop-blur transition-colors hover:bg-gold/15"
+          >
+            🔊
+          </a>
+          <a
+            href={VIMEO_PAGE}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open showreel fullscreen on Vimeo"
+            className="pointer-events-auto flex h-9 w-9 items-center justify-center border border-gold/55 bg-ink-warm/75 text-cream backdrop-blur transition-colors hover:bg-gold/15"
+          >
+            ⤢
+          </a>
+        </div>
+      )}
     </div>
   );
 }
@@ -1458,9 +1464,14 @@ export async function POST(req: Request) {
     <p>${escapeHtml(data.message).replace(/\n/g, "<br/>")}</p>
   `;
 
+  // Use Resend's pre-verified test domain until our own domain is verified.
+  // Swap to e.g. "Spencer Lynch <bookings@spencerlynch.co.uk>" once Resend
+  // domain verification is set up (Plan 7 / production deploy).
+  const FROM = "Spencer Lynch Site <onboarding@resend.dev>";
+
   try {
     await resend.emails.send({
-      from: "Spencer Lynch Site <noreply@spencerlynch.co.uk>", // configure once domain is verified
+      from: FROM,
       to: env.ENQUIRY_TO_EMAIL,
       replyTo: data.email,
       subject,
@@ -1692,16 +1703,14 @@ This is a logic test, not an integration test — we don't actually call Resend.
 
 ```typescript
 // spencer-lynch/tests/unit/api-enquiry.test.ts
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeAll, beforeEach } from "vitest";
 
-// Mock the Resend module before importing the route
+// Mock the Resend module BEFORE the route module loads.
+// vi.mock is hoisted by Vitest so this works regardless of import order below.
 const sendMock = vi.fn().mockResolvedValue({ id: "test_id" });
-vi.mock("resend", () => ({ Resend: vi.fn().mockImplementation(() => ({ emails: { send: sendMock } })) }));
-// Stub env so the env zod parse doesn't blow up at module load
-vi.stubEnv("RESEND_API_KEY", "test_key");
-vi.stubEnv("ENQUIRY_TO_EMAIL", "spencer@example.com");
-
-import { POST } from "@/app/api/enquiry/route";
+vi.mock("resend", () => ({
+  Resend: vi.fn().mockImplementation(() => ({ emails: { send: sendMock } })),
+}));
 
 const validBody = {
   name: "Jane Doe",
@@ -1719,6 +1728,17 @@ function makeRequest(body: unknown) {
     body: JSON.stringify(body),
   });
 }
+
+// Lazy-bound POST handler — imported AFTER env is stubbed.
+let POST: (req: Request) => Promise<Response>;
+
+beforeAll(async () => {
+  // env.ts calls schema.parse() at module load — set the env vars before importing.
+  vi.stubEnv("RESEND_API_KEY", "test_key");
+  vi.stubEnv("ENQUIRY_TO_EMAIL", "spencer@example.com");
+  const mod = await import("@/app/api/enquiry/route");
+  POST = mod.POST;
+});
 
 beforeEach(() => sendMock.mockClear());
 
@@ -1748,12 +1768,12 @@ describe("POST /api/enquiry", () => {
 });
 ```
 
-- [ ] **Step 2: Run, expect pass (after Resend mocked)**
+- [ ] **Step 2: Run, expect pass**
 
 ```bash
 npm test
 ```
-Expected: 3 passing in `api-enquiry.test.ts`. (If it fails because env validation rejects empty strings, ensure `vi.stubEnv` runs before the import — using top-level placement as shown.)
+Expected: 3 passing in `api-enquiry.test.ts`. The `await import()` inside `beforeAll` ensures `lib/env.ts`'s top-level `schema.parse()` sees the stubbed env, avoiding the hoisting gotcha that would crash a top-level import of the route.
 
 - [ ] **Step 3: Commit**
 
@@ -1957,13 +1977,13 @@ test("/book page renders enquiry form with all fields", async ({ page }) => {
 
 test("client validation blocks an empty enquiry submission", async ({ page }) => {
   await page.goto("/book");
-  await page.getByRole("button", { name: /send enquiry/i }).click();
-  // Fields show validation feedback (the zodResolver shows messages under fields)
-  // We don't depend on exact wording — just assert the request never fires
+  // Attach the request listener BEFORE clicking — otherwise a synchronous
+  // request would fire before the listener attaches and we'd miss it.
   let requestedEnquiry = false;
   page.on("request", (r) => {
     if (r.url().includes("/api/enquiry")) requestedEnquiry = true;
   });
+  await page.getByRole("button", { name: /send enquiry/i }).click();
   await page.waitForTimeout(500);
   expect(requestedEnquiry).toBe(false);
 });
@@ -2013,13 +2033,10 @@ Record the four scores. Targets per spec:
 
 - [ ] **Step 4: If Performance < 90**, the most likely culprits and fixes:
 
-1. **Vimeo iframe blocking LCP** — wrap the iframe in `<HeroShowreel>` so it lazy-loads after first paint:
-   ```tsx
-   // hero-showreel.tsx — change the iframe to:
-   <iframe loading="lazy" /* + existing props */ />
-   ```
-2. **Logo `<Image>` not optimised** — confirm `next/image` is used everywhere and `priority` is set only on the above-fold logo.
+1. **LCP** — the hero showreel is the LCP element. Do **not** lazy-load the iframe (that would *worsen* perceived load). Instead, the LCP candidate should be the **poster `<Image priority>` already rendered behind the iframe** — confirm in DevTools Performance panel that LCP fires on the poster, not the iframe. If LCP is still slow, ensure the poster JPG is well-compressed (~50–100 KB) and uses `sizes` correctly.
+2. **Logo `<Image>` not optimised** — confirm `next/image` is used everywhere and `priority` is set only on above-the-fold instances.
 3. **Font flash** — `next/font` with `display: swap` is already configured.
+4. **Below-fold WhatsApp / footer SVG** — minor; these load late anyway.
 
 - [ ] **Step 5: If Accessibility < 95**, common items:
 
