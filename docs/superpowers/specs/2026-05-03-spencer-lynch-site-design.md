@@ -159,7 +159,7 @@ A persistent nav pill that, when clicked, opens a random hidden trick in a modal
 
 ### Hidden routes
 
-At least one secret route (e.g. `/the-vault`) only revealed when the visitor performs correctly during a specific trick interaction. The reveal is via a copy-able URL that surfaces in a "well done" reveal screen.
+At least one secret route (e.g. `/the-vault`) only revealed when the visitor performs correctly during a specific trick interaction. On unlock, the URL surfaces in a "well done" reveal screen *and* is persisted to `localStorage` under a known key — once unlocked, the route stays accessible to that visitor on subsequent visits without re-performing the trick. The URL itself is also copy-able from the reveal screen for sharing.
 
 ### Trick implementation principles
 
@@ -186,6 +186,8 @@ Production:
 - **B** requires hiring an illustrator first; budget for 3-5 frames (idle, smile, card-fan, point, surprise) — Kling animates between them
 - **A** requires a proper studio photo session with Spencer (or a single high-quality existing portrait)
 - **C** can be developer-built (SVG silhouette + animated card overlays); does not strictly require Kling
+
+**Launch fallback:** if the illustrator pipeline (B) is not delivered in time for launch, ship with **C (Shadow Play) as the everyday host** instead. C is dev-buildable and already aligned with the locked aesthetic; using it as the host until B arrives is a one-line component swap. A still ships in its reserved role regardless.
 
 ## Showreel Treatment
 
